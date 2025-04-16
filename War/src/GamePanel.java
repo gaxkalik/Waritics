@@ -7,11 +7,11 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-class GamePanel extends JPanel implements ActionListener, KeyListener
+public class GamePanel extends JPanel implements ActionListener, KeyListener
 {
     private Timer timer;
-    private ArrayList<Entity> entities;
-    private Entity player;
+    private ArrayList<Character> entities;
+    private Character player;
     private Random random;
     private String statusMessage = "";
     private boolean up, down, left, right;
@@ -40,7 +40,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener
 
         int enemyCount = 2 + level;
         for (int i = 0; i < enemyCount; i++) {
-            Entity enemy = (i % 2 == 0) ? new Mage(200 + i * 60, 100 + i * 40, player)
+            Character enemy = (i % 2 == 0) ? new Mage(200 + i * 60, 100 + i * 40, player)
                     : new Archer(200 + i * 60, 100 + i * 40, player);
             entities.add(enemy);
         }
@@ -49,7 +49,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Entity e : entities) {
+        for (Character e : entities) {
             if (e.isAlive()) e.draw(g);
         }
         g.setColor(Color.WHITE);
@@ -66,18 +66,18 @@ class GamePanel extends JPanel implements ActionListener, KeyListener
 
         boolean enemiesAlive = false;
 
-        for (Entity entity : entities) {
-            if (entity != player && entity.isAlive()) {
-                entity.update();
+        for (Character character : entities) {
+            if (character != player && character.isAlive()) {
+                character.update();
 
-                if (player.getBounds().intersects(entity.getBounds())) {
-                    entity.attack(player);
-                    statusMessage = entity.name + " attacked you!";
+                if (player.getBounds().intersects(character.getBounds())) {
+                    character.attack(player);
+                    statusMessage = character.name + " attacked you!";
                 }
 
-                if (entity.getBounds().intersects(player.getBounds())) {
-                    player.attack(entity);
-                    statusMessage = player.name + " attacked " + entity.name + "!";
+                if (character.getBounds().intersects(player.getBounds())) {
+                    player.attack(character);
+                    statusMessage = player.name + " attacked " + character.name + "!";
                 }
 
                 enemiesAlive = true;
@@ -108,12 +108,12 @@ class GamePanel extends JPanel implements ActionListener, KeyListener
             player.speed = 7;
         else if (e.getKeyCode() == KeyEvent.VK_SPACE)
         {
-            for (Entity entity : entities)
+            for (Character character : entities)
             {
-                if (entity != player && entity.isAlive() && player.getBounds().intersects(entity.getBounds()))
+                if (character != player && character.isAlive() && player.getBounds().intersects(character.getBounds()))
                 {
-                    entity.takeDamage(40);
-                    statusMessage = player.name + " used special attack on " + entity.name + "!";
+                    character.takeDamage(40);
+                    statusMessage = player.name + " used special attack on " + character.name + "!";
                 }
             }
         }

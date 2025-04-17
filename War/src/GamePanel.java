@@ -1,9 +1,12 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,18 +15,27 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     private Timer timer;
     private ArrayList<Character> entities;
     private Character player;
-    private Random random;
     private String statusMessage = "";
     private boolean up, down, left, right;
     private int level = 1;
+    private Image background;
+    private JButton move;
 
-    public GamePanel() {
+
+    public GamePanel()
+    {
         setPreferredSize(new Dimension(800, 600));
-        setBackground(Color.BLACK);
+        //setBackground(Color.BLACK);
+        setLayout(null);
+
+        background = new ImageIcon(getClass().getResource("./test.jpg")).getImage();
+
+
+
         setFocusable(true);
         addKeyListener(this);
 
-        random = new Random();
+
         entities = new ArrayList<>();
 
         loadLevel(level);
@@ -38,20 +50,44 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         player = new Warrior(100, 100);
         entities.add(player);
 
+
         int enemyCount = 2 + level;
         for (int i = 0; i < enemyCount; i++) {
             Character enemy = (i % 2 == 0) ? new Mage(200 + i * 60, 100 + i * 40, player)
-                    : new Archer(200 + i * 60, 100 + i * 40, player);
+                                           : new Archer(200 + i * 60, 100 + i * 40, player);
             entities.add(enemy);
         }
+
+        move = new JButton("Attack");
+        move.setLayout(null);
+
+        move.setFocusable(false);
+        move.setBounds(500,300,100,50);
+        move.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                for (Character character : entities) {
+                    if (character != player && character.isAlive()) {
+                        character.update();
+                        player.attack(character);
+                        statusMessage = player.name + " attacked " + character.name + "!";
+                    }
+                }
+            }
+        });
+
+        add(move);
+
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g)
+    {
         super.paintComponent(g);
+        g.drawImage(background, 0, 0,800 ,600,null);
         for (Character e : entities) {
             if (e.isAlive()) e.draw(g);
         }
+
         g.setColor(Color.WHITE);
         g.drawString("Level: " + level, 700, 20);
         g.drawString(statusMessage, 10, 580);
@@ -59,10 +95,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (up) player.y -= player.speed;
-        if (down) player.y += player.speed;
-        if (left) player.x -= player.speed;
-        if (right) player.x += player.speed;
+        if (up && player.y >= 0)
+            player.y -= player.speed;
+        if (down && player.y <= 600 - 40)
+            player.y += player.speed;
+        if (left && player.x >= 0)
+            player.x -= player.speed;
+        if (right && player.x <= 800 - 40)
+            player.x += player.speed;
+
+
 
         boolean enemiesAlive = false;
 
@@ -89,6 +131,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
             loadLevel(level);
             statusMessage = "Level Up! Welcome to Level " + level;
         }
+
 
         repaint();
     }
@@ -135,5 +178,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e)
+    {
+        return;
+    }
 }

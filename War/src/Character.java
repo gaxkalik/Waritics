@@ -4,10 +4,8 @@ import java.awt.image.BufferedImage;
 
 public abstract class Character
 {
-    protected int x, y;
-    protected int width, height;
-    protected int health;
-    protected int maxHealth;
+    protected int x, y, width, height;
+    protected int health, maxHealth;
     protected int speed;
     protected BufferedImage texture;
     protected String name;

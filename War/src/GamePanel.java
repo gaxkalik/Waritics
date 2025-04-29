@@ -19,16 +19,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     private boolean up, down, left, right;
     private int level = 1;
     private Image background;
+    private ArrayList<JButton> buttons;
+    private int playerCount;
+
     private JButton move;
 
 
     public GamePanel()
     {
         setPreferredSize(new Dimension(800, 600));
-        //setBackground(Color.BLACK);
+        setBackground(Color.BLACK);
         setLayout(null);
 
-        background = new ImageIcon(getClass().getResource("./test.jpg")).getImage();
+        //background = new ImageIcon(getClass().getResource("./test.jpg")).getImage();
 
 
 
@@ -37,6 +40,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
 
 
         entities = new ArrayList<>();
+        buttons = new ArrayList<>();
 
         loadLevel(level);
 
@@ -58,8 +62,24 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
             entities.add(enemy);
         }
 
+        playerCount=10;
+        for (int i = 0; i < playerCount; i++) {
+            JButton attackButton = new JButton("<html>Attack<br>" + player.name + "</html>");
+
+            attackButton.setFont(new Font("Arial", Font.PLAIN, 8));
+            attackButton.setFocusable(false);
+
+            attackButton.setBounds(70*i,550,70,50);
+            add(attackButton);
+            buttons.add(attackButton);
+        }
+
+
+
+
         move = new JButton("Attack");
-        move.setLayout(null);
+
+
 
         move.setFocusable(false);
         move.setBounds(500,300,100,50);
@@ -91,6 +111,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         g.setColor(Color.WHITE);
         g.drawString("Level: " + level, 700, 20);
         g.drawString(statusMessage, 10, 580);
+    }
+
+    public void setPlayerCount(int playerCount)
+    {
+        this.playerCount = playerCount;
     }
 
     @Override

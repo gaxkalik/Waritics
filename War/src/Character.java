@@ -67,7 +67,7 @@ public abstract class Character
         {
             BufferedImage img = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g = img.createGraphics();
-            g.setColor(Color.MAGENTA);
+            g.setColor(Color.RED);
             g.fillRect(0, 0, 40, 40);
             g.dispose();
             return img;

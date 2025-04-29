@@ -72,6 +72,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
             attackButton.setBounds(70*i,550,70,50);
             add(attackButton);
             buttons.add(attackButton);
+
         }
 
 

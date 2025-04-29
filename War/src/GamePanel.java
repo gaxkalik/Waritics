@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
 
         player = new Warrior(100, 100);
         entities.add(player);
-
+        player.setWeapon(new Weapons(50, 200));
 
         int enemyCount = 2 + level;
         for (int i = 0; i < enemyCount; i++) {

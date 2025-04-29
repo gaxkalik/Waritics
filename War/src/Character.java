@@ -7,10 +7,13 @@ public abstract class Character
     protected int x, y, width, height;
     protected int health, maxHealth;
     protected int speed;
+    protected int attack;
+    protected int defence;
     protected BufferedImage texture;
+    protected Weapons weapon;
     protected String name;
 
-    public Character(String name, int x, int y, int width, int height, int health, int speed, BufferedImage texture)
+    public Character(String name, int x, int y, int width, int height, int health, int speed, int attack, int defence, BufferedImage texture)
     {
         this.name = name;
         this.x = x;
@@ -21,10 +24,17 @@ public abstract class Character
         this.maxHealth = health;
         this.speed = speed;
         this.texture = texture;
+        this.attack = attack;
+        this.defence = defence;
+        this.weapon = null;
     }
 
     public abstract void update();
-    public abstract void attack(Character target);
+
+    public void attack(Character target)
+    {
+        target.takeDamage(this.getAttack());
+    }
 
     public void draw(Graphics g)
     {
@@ -53,7 +63,7 @@ public abstract class Character
 
     public void takeDamage(int damage)
     {
-        health -= damage;
+        health -= damage * (100 - getDefence()) / 100;
         if (health < 0) health = 0;
     }
 
@@ -72,5 +82,19 @@ public abstract class Character
             g.dispose();
             return img;
         }
+    }
+
+    public void setWeapon(Weapons weapon) {
+        this.weapon = new Weapons(weapon);
+    }
+
+    public int getDefence() {
+        if (weapon == null) return defence;
+        return defence * (100 + weapon.defenseBoost) / 100;
+    }
+
+    public int getAttack() {
+        if (weapon == null) return attack;
+        return attack * (100 + weapon.attackBoost) / 100;
     }
 }

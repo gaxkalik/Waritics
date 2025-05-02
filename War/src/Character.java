@@ -12,6 +12,7 @@ public abstract class Character
     protected BufferedImage texture;
     protected Equipment weapon, armor;
     protected String name;
+    Rarity rarity;
 
     public Character(String name, int x, int y, int width, int height, int health, int speed, int attack, int defence, BufferedImage texture)
     {
@@ -29,7 +30,7 @@ public abstract class Character
         this.weapon = null;
     }
 
-    public abstract void update();
+    public abstract void move();
 
     public void attack(Character target)
     {

@@ -1,14 +1,10 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener
 {
@@ -31,8 +27,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         setBackground(Color.BLACK);
         setLayout(null);
 
-        //background = new ImageIcon(getClass().getResource("./test.jpg")).getImage();
+        //background = new ImageIcon(getClass().getResource("./BG1.jpeg")).getImage();
 
+    /*    if(level == 1)
+        {
+            background = new ImageIcon(getClass().getResource("./BG1.png")).getImage();
+        }
+        else if(level == 2)
+        {
+            background = new ImageIcon(getClass().getResource("./BG2.jpeg")).getImage();
+        }
+        else
+        {
+            background = new ImageIcon(getClass().getResource("./BG3.jpeg")).getImage();
+        }
+
+     */
 
 
         setFocusable(true);
@@ -51,18 +61,50 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     private void loadLevel(int level) {
         entities.clear();
 
-        player = new Warrior(100, 100);
+        if(level == 1)
+        {
+           background = new ImageIcon(getClass().getResource("./BG1.png")).getImage();
+           player = new Doc(100,100);
+           Character boss = new GeneralScwarts(400, 400, player);
+           entities.add(boss);
+           entities.add(player);
+        }
+        else if(level == 2)
+        {
+           background = new ImageIcon(getClass().getResource("./BG2.jpeg")).getImage();
+           player = new Police(100,100);
+           Character boss = new Archer(400, 400, player);
+           entities.add(boss);
+           entities.add(player);
+        }
+        else
+        {
+            background = new ImageIcon(getClass().getResource("./BG3.jpeg")).getImage();
+            player = new Police(100,100);
+            Character boss = new Archer(400, 400, player);
+            entities.add(boss);
+            entities.add(player);
+        }
+
+
+
+
+    /*    player = new Doc(100, 100);
         entities.add(player);
         player.setEquipment(new Equipment(0, 200, Equipment.EquipmentType.ARMOR));
         player.setEquipment(new Equipment(200, 0, Equipment.EquipmentType.WEAPON));
 
+        Character boss = new GeneralScwarts(400, 400, player);
+        Character boss2 = new Archer(250, 400, player);
+        entities.add(boss);
+        entities.add(boss2);
 
         int enemyCount = 2 + level;
         for (int i = 0; i < enemyCount; i++) {
-            Character enemy = (i % 2 == 0) ? new Mage(200 + i * 60, 100 + i * 40, player)
+            Character enemy = (i % 2 == 0) ? new GeneralScwarts(200 + i * 60, 100 + i * 40, player)
                                            : new Archer(200 + i * 60, 100 + i * 40, player);
             entities.add(enemy);
-        }
+        }*/
 
         playerCount=10;
         for (int i = 0; i < playerCount; i++) {
@@ -90,7 +132,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
             public void actionPerformed(ActionEvent e) {
                 for (Character character : entities) {
                     if (character != player && character.isAlive()) {
-                        character.update();
+                        character.move();
                         player.attack(character);
                         statusMessage = player.name + " attacked " + character.name + "!";
                     }
@@ -138,7 +180,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
 
         for (Character character : entities) {
             if (character != player && character.isAlive()) {
-                character.update();
+                character.move();
 
                 if (player.getBounds().intersects(character.getBounds())) {
                     character.attack(player);

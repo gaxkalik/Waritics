@@ -7,14 +7,18 @@ public abstract class Character
     protected int x, y, width, height;
     protected int health, maxHealth;
     protected int speed;
+    protected int attackSpeed;
     protected int attack;
     protected int defence;
     protected BufferedImage texture;
     protected Equipment weapon, armor;
     protected String name;
-    Rarity rarity;
+    protected Rarity rarity;
+    public boolean good;
+    private long lastAttackTime = 0;
 
-    public Character(String name, int x, int y, int width, int height, int health, int speed, int attack, int defence, BufferedImage texture)
+    public Character(String name, int x, int y, int width, int height, int health, int speed,
+                     int attackSpeed, int attack, int defence, BufferedImage texture)
     {
         this.name = name;
         this.x = x;
@@ -24,6 +28,7 @@ public abstract class Character
         this.health = health;
         this.maxHealth = health;
         this.speed = speed;
+        this.attackSpeed = attackSpeed;
         this.texture = texture;
         this.attack = attack;
         this.defence = defence;
@@ -34,7 +39,15 @@ public abstract class Character
 
     public void attack(Character target)
     {
-        target.takeDamage(this.getAttack());
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastAttackTime >= attackSpeed)
+        {
+            target.takeDamage(this.getAttack());
+            lastAttackTime = currentTime;
+        }
+
+
+
     }
 
     public void draw(Graphics g)

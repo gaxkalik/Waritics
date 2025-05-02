@@ -35,7 +35,7 @@ public abstract class Character
         this.weapon = null;
     }
 
-    public abstract void move();
+    public abstract void update();
 
     public void attack(Character target)
     {
@@ -52,6 +52,9 @@ public abstract class Character
 
     public void draw(Graphics g)
     {
+        long currentTime = System.currentTimeMillis();
+
+
         g.drawImage(texture, x, y, width, height, null);
 
         // Health bar
@@ -61,8 +64,19 @@ public abstract class Character
         int healthBarWidth = (int) (((double) health / maxHealth) * width);
         g.fillRect(x, y - 10, healthBarWidth, 5);
 
+
+        g.setColor(Color.RED);
+        g.fillRect(x, y - 20, width, 5);
+        g.setColor(Color.BLUE);
+        long attackBarWidth = (int) (((double)(currentTime - lastAttackTime) /attackSpeed) * width);
+        if (attackBarWidth >= width)
+            attackBarWidth =width;
+        g.fillRect(x, y - 20, (int)attackBarWidth, 5);
+
+
+
         g.setColor(Color.WHITE);
-        g.drawString(name, x, y - 15);
+        g.drawString(name, x, y - 25);
     }
 
     public Rectangle getBounds()

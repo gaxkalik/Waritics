@@ -8,7 +8,7 @@ public class Police extends Character
     }
 
 
-    public void move()
+    public void update()
     {
     }
 }

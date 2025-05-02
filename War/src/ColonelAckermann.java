@@ -1,22 +1,16 @@
 import java.util.ArrayList;
 
-public class GeneralSchwartz extends Character
+public class ColonelAckermann extends Character
 {
     private ArrayList<Character> targets;
     private int target;
 
-
-
-
-    public GeneralSchwartz(int x, int y, ArrayList<Character> targets)
+    public ColonelAckermann(int x, int y, ArrayList<Character> targets)
     {
-        super("General Schwartz", x, y, 100, 100, 150, 10, 1000, 10,
-                0, loadTexture("/BOSS1.png"));
+        super("Colonel Ackermann", x, y, 100, 100, 120, 1,1000 ,
+                20, 10, loadTexture("/BOSS2.png"));
         this.targets = targets;
-
-
         good=false;
-
     }
 
     public void update()
@@ -28,14 +22,13 @@ public class GeneralSchwartz extends Character
         }
         catch (Exception e)
         {
-            //System.out.println("essss");
+           // System.out.println("essss");
             attack(targets.get(0));
         }
 
 
-
-
-       /* if (target != null && target.isAlive())
+    /*
+      if (target != null && target.isAlive())
         {
             if (x < target.x) x += speed;
             if (x > target.x) x -= speed;

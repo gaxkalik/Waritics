@@ -1,3 +1,5 @@
+package waritics.core;
+
 public class Equipment
 {
     public enum EquipmentType{WEAPON, ARMOR}

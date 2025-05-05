@@ -1,3 +1,5 @@
+package waritics.core;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -45,7 +47,7 @@ public class GamePanel extends JPanel implements ActionListener
 
         if (level == 2)         //loads first level
         {
-            background = new ImageIcon(getClass().getResource("./BG1.png")).getImage();
+            background = new ImageIcon(getClass().getResource("../textures/BG1.png")).getImage();
             Character p1 = new Doc(100, 400);
 
             boss = new ColonelAckermann(600, 400, players);
@@ -55,7 +57,7 @@ public class GamePanel extends JPanel implements ActionListener
         }
         else if (level == 3)       //loads second level
         {
-            background = new ImageIcon(getClass().getResource("./BG2.jpeg")).getImage();
+            background = new ImageIcon(getClass().getResource("../textures/BG2.jpeg")).getImage();
 
             Character p1 = new Police(130, 440);
             boss = new GeneralSchwartz(600, 400, players);
@@ -68,7 +70,7 @@ public class GamePanel extends JPanel implements ActionListener
             boss = new Placeholder();
             entities.add(boss);
 
-            background = new ImageIcon(getClass().getResource("./BG_MAIN.jpeg")).getImage();
+            background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
 
             JLabel label = new JLabel("GAME OVER");
             label.setFont(new Font("Arial", Font.PLAIN, 50));
@@ -136,7 +138,7 @@ public class GamePanel extends JPanel implements ActionListener
         else if (level == 0)        //main menu
         {
             statusMessage="";
-            background = new ImageIcon(getClass().getResource("./BG_MAIN.jpeg")).getImage();
+            background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
 
             JLabel label = new JLabel("WARITICS");
             label.setFont(new Font("Arial", Font.BOLD, 50));
@@ -179,7 +181,7 @@ public class GamePanel extends JPanel implements ActionListener
         }
         else            //more levels to come
         {
-            background = new ImageIcon(getClass().getResource("./BG3.jpeg")).getImage();
+            background = new ImageIcon(getClass().getResource("../textures/BG3.jpeg")).getImage();
             //player = new Police(100, 100);
             boss = new ColonelAckermann(400, 400, players);
             entities.add(boss);

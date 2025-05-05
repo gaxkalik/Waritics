@@ -1,3 +1,5 @@
+package waritics.core;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -97,7 +99,7 @@ public abstract class Character
     {
         try
         {
-            return ImageIO.read(Character.class.getResource(path));
+            return ImageIO.read(Character.class.getResource("../textures/"+path));
         }
         catch (Exception e)
         {

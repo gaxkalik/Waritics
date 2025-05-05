@@ -1,7 +1,7 @@
-import javax.imageio.ImageIO;
+package waritics;
+import waritics.core.*;
+
 import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 class Game
 {

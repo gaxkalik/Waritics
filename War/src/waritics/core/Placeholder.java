@@ -1,3 +1,5 @@
+package waritics.core;
+
 public class Placeholder extends Character
 {
     public Placeholder()

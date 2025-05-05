@@ -1,3 +1,5 @@
+package waritics.core;
+
 import java.util.ArrayList;
 
 public class ColonelAckermann extends Character
@@ -8,7 +10,7 @@ public class ColonelAckermann extends Character
     public ColonelAckermann(int x, int y, ArrayList<Character> targets)
     {
         super("Colonel Ackermann", x, y, 100, 100, 100, 1000 ,
-                20, 10, loadTexture("/BOSS2.png"));
+                10, 10, loadTexture("BOSS2.png"));
         this.targets = targets;
         good=false;
     }
@@ -22,7 +24,7 @@ public class ColonelAckermann extends Character
         }
         catch (Exception e)
         {
-            attack(targets.getFirst());
+            attack(targets.get(0));
         }
 
 

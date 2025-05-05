@@ -1,7 +1,8 @@
 package waritics;
-import waritics.core.*;
 
+import waritics.core.*;
 import javax.swing.*;
+import java.io.*;
 
 class Game
 {
@@ -15,8 +16,9 @@ class Game
         //frame.add(new ImageIcon("test.jpg"));
 
 
+        int level = 0;
 
-        frame.add(new GamePanel());
+        frame.add(new GamePanel(level));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

@@ -95,11 +95,11 @@ public abstract class Character
         if (health < 0) health = 0;
     }
 
-    protected static BufferedImage loadTexture(String path)
+    protected static BufferedImage loadTexture(String fileName)
     {
         try
         {
-            return ImageIO.read(Character.class.getResource("../textures/"+path));
+            return ImageIO.read(Character.class.getResource("../textures/"+ fileName));
         }
         catch (Exception e)
         {

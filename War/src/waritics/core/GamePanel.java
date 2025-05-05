@@ -1,24 +1,24 @@
 package waritics.core;
 
+import java.io.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GamePanel extends JPanel implements ActionListener
 {
-    private Timer timer;
+    private final Timer timer;
     private ArrayList<Character> entities;      //list to store all entities that are shown on the screen
     private Character boss;
     private String statusMessage = "";
     private int level = 0;
     private Image background;
-    private ArrayList<JButton> buttons;         //buttons for attacking enemies
     private ArrayList<Character> players;       //list to store players
 
 
-    public GamePanel()
+    public GamePanel(int level)
     {
         setPreferredSize(new Dimension(800, 600));
         setBackground(Color.BLACK);
@@ -26,14 +26,12 @@ public class GamePanel extends JPanel implements ActionListener
 
         setFocusable(true);
 
-
         entities = new ArrayList<>();
         players = new ArrayList<>();
-        buttons = new ArrayList<>();
 
         loadLevel(level);
 
-        timer = new Timer(20, this);
+        timer = new Timer(30, this);            //generates an event for game loop
         timer.start();
     }
 
@@ -43,7 +41,6 @@ public class GamePanel extends JPanel implements ActionListener
         removeAll();
         entities.clear();
         players.clear();
-        buttons.clear();
 
         if (level == 2)         //loads first level
         {
@@ -54,6 +51,7 @@ public class GamePanel extends JPanel implements ActionListener
             entities.add(boss);
             players.add(p1);
             entities.add(p1);
+
         }
         else if (level == 3)       //loads second level
         {
@@ -114,7 +112,7 @@ public class GamePanel extends JPanel implements ActionListener
             boss = new Placeholder();
             entities.add(boss);
 
-           JLabel label = new JLabel("<html>On one sunny day, from nowhere cataclysm occurred and portals were opened all over the world. From portals evil conquerors throughout the history were summoned. They conquered the world and injected the fear into all of the people who were still alive. Only a few of them, ordinary people like doctors & policemen were willing to fight. They should defeat all of the evil leaders to return the world to its peaceful times once again!!</html>");
+            JLabel label = new JLabel("<html>On one sunny day, from nowhere cataclysm occurred and portals were opened all over the world. From portals evil conquerors throughout the history were summoned. They conquered the world and injected the fear into all of the people who were still alive. Only a few of them, ordinary people like doctors & policemen were willing to fight. They should defeat all of the evil leaders to return the world to its peaceful times once again!!</html>");
             label.setFont(new Font("Arial", Font.BOLD, 15));
             label.setForeground(Color.WHITE);
             label.setBounds(200, 100, 400, 400);
@@ -164,7 +162,7 @@ public class GamePanel extends JPanel implements ActionListener
             JButton exitButton = new JButton("EXIT GAME");
             exitButton.setFocusable(false);
             exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
-            exitButton.setBounds(295, 325, 200, 75);
+            exitButton.setBounds(295, 400, 200, 75);
             exitButton.addActionListener(new ActionListener()
             {
                 @Override
@@ -174,6 +172,21 @@ public class GamePanel extends JPanel implements ActionListener
                 }
             });
 
+            JButton loadButton = new JButton("LOAD GAME");
+            loadButton.setFocusable(false);
+            loadButton.setFont(new Font("Arial", Font.PLAIN, 19));
+            loadButton.setBounds(295, 325, 200, 75);
+            loadButton.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    //System.out.println("sdfghj");
+                    loadFromDisc();
+                }
+            });
+
+            add(loadButton);
             add(startButton);
             add(label);
             add(exitButton);
@@ -188,14 +201,25 @@ public class GamePanel extends JPanel implements ActionListener
             //entities.add(player);
         }
 
+        if (level >= 2)
+            saveToDisc();
 
+        generateAttackButtons();
+
+    }
+
+    private void increaseLevel()
+    {
+        loadLevel(++level);
+    }
+
+    private void generateAttackButtons()
+    {
         for (int i = 0; i < players.size(); i++)
         {
             if(!(players.get(i) instanceof Placeholder))
             {
                 JButton attackButton = new JButton("<html>Attack<br>" + players.get(i).name + "</html>");
-
-                //remove(attackButton);
 
                 attackButton.setFont(new Font("Arial", Font.PLAIN, 8));
                 attackButton.setFocusable(false);
@@ -222,10 +246,8 @@ public class GamePanel extends JPanel implements ActionListener
                         {
                             for (int i = 0; i < players.size(); i++)
                             {
-
                                 if (players.get(i).isAlive() && boss.isAlive())
                                 {
-                                    //players.get(i).update();
                                     players.get(i).attack(boss);
                                     statusMessage = players.get(i).name + " attacked " + boss.name + "!";
                                 }
@@ -235,16 +257,9 @@ public class GamePanel extends JPanel implements ActionListener
                 });
 
                 add(attackButton);
-                //buttons.add(attackButton);
             }
 
         }
-
-    }
-
-    private void increaseLevel()
-    {
-        loadLevel(++level);
     }
 
     private boolean alivePlayers()
@@ -253,6 +268,43 @@ public class GamePanel extends JPanel implements ActionListener
             if(!players.get(i).isAlive())
                 return false;
         return true;
+    }
+
+    private void saveToDisc()
+    {
+        PrintWriter writer = null;
+        try
+        {
+            File file = new File(getClass().getResource("../saves/save.txt").getFile());
+            writer = new PrintWriter(new FileOutputStream(file));
+            writer.println(level);
+            writer.close();
+        }
+        catch (FileNotFoundException e)
+        {
+            loadLevel(0);
+            statusMessage = "Error saving game!";
+            System.out.println("sdfg");
+        }
+    }
+
+    private void loadFromDisc()
+    {
+        Scanner reader = null;
+        try
+        {
+            File file = new File(getClass().getResource("../saves/save.txt").getFile());
+            reader = new Scanner(new FileInputStream(file));
+            level = reader.nextInt();
+            loadLevel(level);
+            reader.close();
+        }
+        catch (Exception e)
+        {
+            loadLevel(0);
+            statusMessage = "Error loading game!";
+            System.out.println("ertyjyktyrt");
+        }
     }
 
 
@@ -279,7 +331,7 @@ public class GamePanel extends JPanel implements ActionListener
 
 
     @Override
-    public void actionPerformed(ActionEvent e)
+    public void actionPerformed(ActionEvent e)      //timer activates this every 20ms
     {
         if(!alivePlayers())
         {
@@ -295,6 +347,6 @@ public class GamePanel extends JPanel implements ActionListener
             statusMessage = "Level Up! Welcome to Level " + level;
         }
 
-        repaint();
+        repaint();                      //draws the game by calling paint component
     }
 }

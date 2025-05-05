@@ -13,10 +13,10 @@ public class GamePanel extends JPanel implements ActionListener
     private ArrayList<Character> entities;      //list to store all entities that are shown on the screen
     private Character boss;
     private String statusMessage = "";
-    private int level = 0;
+    int level = 0;
     private Image background;
     private ArrayList<Character> players;       //list to store players
-
+    private Config config;
 
     public GamePanel(int level)
     {
@@ -26,6 +26,7 @@ public class GamePanel extends JPanel implements ActionListener
 
         setFocusable(true);
 
+        config = new Config(this);
         entities = new ArrayList<>();
         players = new ArrayList<>();
 
@@ -52,8 +53,7 @@ public class GamePanel extends JPanel implements ActionListener
             players.add(p1);
             entities.add(p1);
 
-        }
-        else if (level == 3)       //loads second level
+        } else if (level == 3)       //loads second level
         {
             background = new ImageIcon(getClass().getResource("../textures/BG2.jpeg")).getImage();
 
@@ -62,8 +62,7 @@ public class GamePanel extends JPanel implements ActionListener
             entities.add(boss);
             entities.add(p1);
             players.add(p1);
-        }
-        else if (level == -1)       //the game over screen
+        } else if (level == -1)       //the game over screen
         {
             boss = new Placeholder();
             entities.add(boss);
@@ -85,11 +84,11 @@ public class GamePanel extends JPanel implements ActionListener
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                   loadLevel(0);
+                    loadLevel(0);
                 }
             });
 
-            JButton exitButton= new JButton("EXIT GAME");
+            JButton exitButton = new JButton("EXIT GAME");
             exitButton.setFocusable(false);
             exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
             exitButton.setBounds(295, 325, 200, 75);
@@ -106,8 +105,7 @@ public class GamePanel extends JPanel implements ActionListener
             add(startButton);
             add(exitButton);
 
-        }
-        else if (level == 1)        //the story of the game
+        } else if (level == 1)        //the story of the game
         {
             boss = new Placeholder();
             entities.add(boss);
@@ -132,10 +130,9 @@ public class GamePanel extends JPanel implements ActionListener
 
             add(button);
             add(label);
-        }
-        else if (level == 0)        //main menu
+        } else if (level == 0)        //main menu
         {
-            statusMessage="";
+            statusMessage = "";
             background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
 
             JLabel label = new JLabel("WARITICS");
@@ -182,7 +179,16 @@ public class GamePanel extends JPanel implements ActionListener
                 public void actionPerformed(ActionEvent e)
                 {
                     //System.out.println("sdfghj");
-                    loadFromDisc();
+                    try
+                    {
+                        config.loadFromDisc();
+                        loadLevel(config.level);
+                    } catch (Exception E)
+                    {
+                        loadLevel(0);
+                        statusMessage = "Error loading game!";
+                    }
+
                 }
             });
 
@@ -191,8 +197,7 @@ public class GamePanel extends JPanel implements ActionListener
             add(label);
             add(exitButton);
 
-        }
-        else            //more levels to come
+        } else            //more levels to come
         {
             background = new ImageIcon(getClass().getResource("../textures/BG3.jpeg")).getImage();
             //player = new Police(100, 100);
@@ -202,16 +207,21 @@ public class GamePanel extends JPanel implements ActionListener
         }
 
         if (level >= 2)
-            saveToDisc();
+        {
+            try
+            {
+                config.saveToDisc();
+            } catch (Exception E)
+            {
+                statusMessage = "Error saving game!";
+            }
+        }
+
 
         generateAttackButtons();
 
     }
 
-    private void increaseLevel()
-    {
-        loadLevel(++level);
-    }
 
     private void generateAttackButtons()
     {
@@ -268,43 +278,6 @@ public class GamePanel extends JPanel implements ActionListener
             if(!players.get(i).isAlive())
                 return false;
         return true;
-    }
-
-    private void saveToDisc()
-    {
-        PrintWriter writer = null;
-        try
-        {
-            File file = new File(getClass().getResource("../saves/save.txt").getFile());
-            writer = new PrintWriter(new FileOutputStream(file));
-            writer.println(level);
-            writer.close();
-        }
-        catch (FileNotFoundException e)
-        {
-            loadLevel(0);
-            statusMessage = "Error saving game!";
-            System.out.println("sdfg");
-        }
-    }
-
-    private void loadFromDisc()
-    {
-        Scanner reader = null;
-        try
-        {
-            File file = new File(getClass().getResource("../saves/save.txt").getFile());
-            reader = new Scanner(new FileInputStream(file));
-            level = reader.nextInt();
-            loadLevel(level);
-            reader.close();
-        }
-        catch (Exception e)
-        {
-            loadLevel(0);
-            statusMessage = "Error loading game!";
-            System.out.println("ertyjyktyrt");
-        }
     }
 
 

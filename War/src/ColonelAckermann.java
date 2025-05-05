@@ -7,7 +7,7 @@ public class ColonelAckermann extends Character
 
     public ColonelAckermann(int x, int y, ArrayList<Character> targets)
     {
-        super("Colonel Ackermann", x, y, 100, 100, 120, 1,1000 ,
+        super("Colonel Ackermann", x, y, 100, 100, 100, 1000 ,
                 20, 10, loadTexture("/BOSS2.png"));
         this.targets = targets;
         good=false;
@@ -22,8 +22,7 @@ public class ColonelAckermann extends Character
         }
         catch (Exception e)
         {
-           // System.out.println("essss");
-            attack(targets.get(0));
+            attack(targets.getFirst());
         }
 
 

@@ -6,7 +6,6 @@ public abstract class Character
 {
     protected int x, y, width, height;
     protected int health, maxHealth;
-    protected int speed;
     protected int attackSpeed;
     protected int attack;
     protected int defence;
@@ -17,7 +16,7 @@ public abstract class Character
     public boolean good;
     private long lastAttackTime = 0;
 
-    public Character(String name, int x, int y, int width, int height, int health, int speed,
+    public Character(String name, int x, int y, int width, int height, int health,
                      int attackSpeed, int attack, int defence, BufferedImage texture)
     {
         this.name = name;
@@ -27,7 +26,6 @@ public abstract class Character
         this.height = height;
         this.health = health;
         this.maxHealth = health;
-        this.speed = speed;
         this.attackSpeed = attackSpeed;
         this.texture = texture;
         this.attack = attack;

@@ -2,24 +2,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-public class GamePanel extends JPanel implements ActionListener, KeyListener
+public class GamePanel extends JPanel implements ActionListener
 {
     private Timer timer;
     private ArrayList<Character> entities;      //list to store all entities that are shown on the screen
-    private Character player;
     private Character boss;
     private String statusMessage = "";
-    //private boolean up, down, left, right;
-    private int level = 1;
+    private int level = 0;
     private Image background;
     private ArrayList<JButton> buttons;         //buttons for attacking enemies
     private ArrayList<Character> players;       //list to store players
-
-
 
 
     public GamePanel()
@@ -29,7 +23,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         setLayout(null);
 
         setFocusable(true);
-        addKeyListener(this);
+
 
         entities = new ArrayList<>();
         players = new ArrayList<>();
@@ -43,98 +37,220 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
 
     private void loadLevel(int level)
     {
+        this.level = level;
         removeAll();
         entities.clear();
         players.clear();
         buttons.clear();
 
-        if (level == 1)
+        if (level == 2)         //loads first level
         {
             background = new ImageIcon(getClass().getResource("./BG1.png")).getImage();
-            Character p1 = new Doc(100, 100);
-            //Character p2 = new Police(200, 100);
+            Character p1 = new Doc(100, 400);
 
-            boss = new GeneralSchwartz(400, 400, players);
+            boss = new ColonelAckermann(600, 400, players);
             entities.add(boss);
-            //entities.add(player);
-            //players.add(player);
             players.add(p1);
             entities.add(p1);
         }
-        else if (level == 2)
+        else if (level == 3)       //loads second level
         {
             background = new ImageIcon(getClass().getResource("./BG2.jpeg")).getImage();
 
-            Character p1 = new Police(100, 100);
-            Character p2 = new Doc(200, 100);
-            boss = new ColonelAckermann(400, 400, players);
+            Character p1 = new Police(130, 440);
+            boss = new GeneralSchwartz(600, 400, players);
             entities.add(boss);
             entities.add(p1);
-            entities.add(p2);
             players.add(p1);
-            players.add(p2);
         }
-        else
+        else if (level == -1)       //the game over screen
+        {
+            boss = new Placeholder();
+            entities.add(boss);
+
+            background = new ImageIcon(getClass().getResource("./BG_MAIN.jpeg")).getImage();
+
+            JLabel label = new JLabel("GAME OVER");
+            label.setFont(new Font("Arial", Font.PLAIN, 50));
+            label.setForeground(new Color(247, 68, 2));
+
+            label.setBounds(270, 100, 400, 100);
+
+            JButton startButton = new JButton("MAIN MENU");
+            startButton.setFocusable(false);
+            startButton.setFont(new Font("Arial", Font.PLAIN, 19));
+            startButton.setBounds(295, 250, 200, 75);
+            startButton.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                   loadLevel(0);
+                }
+            });
+
+            JButton exitButton= new JButton("EXIT GAME");
+            exitButton.setFocusable(false);
+            exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
+            exitButton.setBounds(295, 325, 200, 75);
+            exitButton.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    System.exit(0);
+                }
+            });
+
+            add(label);
+            add(startButton);
+            add(exitButton);
+
+        }
+        else if (level == 1)        //the story of the game
+        {
+            boss = new Placeholder();
+            entities.add(boss);
+
+           JLabel label = new JLabel("<html>On one sunny day, from nowhere cataclysm occurred and portals were opened all over the world. From portals evil conquerors throughout the history were summoned. They conquered the world and injected the fear into all of the people who were still alive. Only a few of them, ordinary people like doctors & policemen were willing to fight. They should defeat all of the evil leaders to return the world to its peaceful times once again!!</html>");
+            label.setFont(new Font("Arial", Font.BOLD, 15));
+            label.setForeground(Color.WHITE);
+            label.setBounds(200, 100, 400, 400);
+
+            JButton button = new JButton("Continue");
+            button.setFocusable(false);
+            button.setFont(new Font("Arial", Font.PLAIN, 19));
+            button.setBounds(295, 400, 200, 75);
+            button.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    loadLevel(2);
+                }
+            });
+
+            add(button);
+            add(label);
+        }
+        else if (level == 0)        //main menu
+        {
+            statusMessage="";
+            background = new ImageIcon(getClass().getResource("./BG_MAIN.jpeg")).getImage();
+
+            JLabel label = new JLabel("WARITICS");
+            label.setFont(new Font("Arial", Font.BOLD, 50));
+            label.setForeground(Color.LIGHT_GRAY);
+            label.setBounds(270, 100, 400, 100);
+
+            boss = new Placeholder();
+            entities.add(boss);
+
+            JButton startButton = new JButton("START THE GAME");
+            startButton.setFocusable(false);
+            startButton.setFont(new Font("Arial", Font.PLAIN, 19));
+            startButton.setBounds(295, 250, 200, 75);
+            startButton.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    loadLevel(1);
+                }
+            });
+
+            JButton exitButton = new JButton("EXIT GAME");
+            exitButton.setFocusable(false);
+            exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
+            exitButton.setBounds(295, 325, 200, 75);
+            exitButton.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    System.exit(0);
+                }
+            });
+
+            add(startButton);
+            add(label);
+            add(exitButton);
+
+        }
+        else            //more levels to come
         {
             background = new ImageIcon(getClass().getResource("./BG3.jpeg")).getImage();
-            player = new Police(100, 100);
+            //player = new Police(100, 100);
             boss = new ColonelAckermann(400, 400, players);
             entities.add(boss);
-            entities.add(player);
+            //entities.add(player);
         }
-
-
 
 
         for (int i = 0; i < players.size(); i++)
         {
-            JButton attackButton = new JButton("<html>Attack<br>" + players.get(i).name + "</html>");
-
-            //remove(attackButton);
-
-            attackButton.setFont(new Font("Arial", Font.PLAIN, 8));
-            attackButton.setFocusable(false);
-            attackButton.setBounds(70 * i, 550, 70, 50);
-
-
-            Timer attackTimer = new Timer(players.get(i).attackSpeed, new ActionListener()
+            if(!(players.get(i) instanceof Placeholder))
             {
-                public void actionPerformed(ActionEvent e)
-                {
-                    attackButton.setEnabled(true);
+                JButton attackButton = new JButton("<html>Attack<br>" + players.get(i).name + "</html>");
 
-                }
-            });
-            attackTimer.setRepeats(false);
+                //remove(attackButton);
 
-            attackButton.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
+                attackButton.setFont(new Font("Arial", Font.PLAIN, 8));
+                attackButton.setFocusable(false);
+                attackButton.setBounds(70 * i, 550, 70, 50);
+
+
+                Timer attackTimer = new Timer(players.get(i).attackSpeed, new ActionListener()
                 {
-                    attackButton.setEnabled(false);
-                    attackTimer.start();
-                    if (entities != null && players != null)
+                    public void actionPerformed(ActionEvent e)
                     {
-                        for (int i = 0; i < players.size(); i++)
-                        {
+                        attackButton.setEnabled(true);
 
-                            if (players.get(i).isAlive() && boss.isAlive())
+                    }
+                });
+                attackTimer.setRepeats(false);
+
+                attackButton.addActionListener(new ActionListener()
+                {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        attackButton.setEnabled(false);
+                        attackTimer.start();
+                        if (entities != null && players != null)
+                        {
+                            for (int i = 0; i < players.size(); i++)
                             {
-                                players.get(i).update();
-                                players.get(i).attack(boss);
-                                statusMessage = player.name + " attacked " + players.get(i).name + "!";
+
+                                if (players.get(i).isAlive() && boss.isAlive())
+                                {
+                                    //players.get(i).update();
+                                    players.get(i).attack(boss);
+                                    statusMessage = players.get(i).name + " attacked " + boss.name + "!";
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
 
-            add(attackButton);
-            //buttons.add(attackButton);
-
+                add(attackButton);
+                //buttons.add(attackButton);
+            }
 
         }
 
+    }
+
+    private void increaseLevel()
+    {
+        loadLevel(++level);
+    }
+
+    private boolean alivePlayers()
+    {
+        for (int i = 0; i < players.size(); i++)
+            if(!players.get(i).isAlive())
+                return false;
+        return true;
     }
 
 
@@ -145,121 +261,38 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         g.drawImage(background, 0, 0, 800, 600, null);
         for (Character e : entities)
         {
-            if (e.isAlive()) e.draw(g);
-
+            if (e.isAlive())
+                e.draw(g);
         }
+        if (level >= 2)
+        {
+            g.setColor(Color.WHITE);
+            g.drawString("Level: " + (level - 1), 700, 20);
 
-        g.setColor(Color.WHITE);
-        g.drawString("Level: " + level, 700, 20);
-
-        g.setColor(Color.RED);
-        g.setFont(new Font("Arial", Font.BOLD, 18));
-        g.drawString(statusMessage, 150, 25);
+            g.setColor(Color.RED);
+            g.setFont(new Font("Arial", Font.BOLD, 18));
+            g.drawString(statusMessage, 150, 25);
+        }
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        /*
-        if (up && player.y >= 0)
-            player.y -= player.speed;
-        if (down && player.y <= 600 - 40)
-            player.y += player.speed;
-        if (left && player.x >= 0)
-            player.x -= player.speed;
-        if (right && player.x <= 800 - 40)
-            player.x += player.speed;
-
-         */
-
-
-
-
-    /*
-        for (Character character : entities)
+        if(!alivePlayers())
         {
-            if (character != player && character.isAlive())
-            {
-                character.update();
-
-                if (player.getBounds().intersects(character.getBounds()))
-                {
-                    character.attack(player);
-                    statusMessage = character.name + " attacked you!";
-                }
-
-                if (character.getBounds().intersects(player.getBounds()))
-                {
-                    player.attack(character);
-                    statusMessage = player.name + " attacked " + character.name + "!";
-                }
-
-            }
+            loadLevel(-1);
         }
-        */
-        if(boss.isAlive())
+        else if (boss.isAlive())
+        {
             boss.update();
+        }
         else
         {
             loadLevel(++level);
             statusMessage = "Level Up! Welcome to Level " + level;
         }
+
         repaint();
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e)
-    {
-        /*
-        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W)
-            up = true;
-        else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S)
-            down = true;
-        else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A)
-            left = true;
-        else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D)
-            right = true;
-        else if (e.getKeyCode() == KeyEvent.VK_SHIFT)
-            player.speed = 7;
-        else if (e.getKeyCode() == KeyEvent.VK_SPACE)
-        {
-            for (Character character : entities)
-            {
-                if (character != player && character.isAlive() && player.getBounds().intersects(character.getBounds()))
-                {
-                    character.takeDamage(40);
-                    statusMessage = player.name + " used special attack on " + character.name + "!";
-                }
-            }
-        }
-
-         */
-    }
-
-
-
-    @Override
-    public void keyReleased(KeyEvent e)
-    {
-        /*
-        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W)
-            up = false;
-        else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S)
-            down = false;
-        else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A)
-            left = false;
-        else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D)
-            right = false;
-        else if (e.getKeyCode() == KeyEvent.VK_SHIFT)
-            player.speed = 4;
-
-         */
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e)
-    {
-        return;
     }
 }

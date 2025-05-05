@@ -10,7 +10,7 @@ public class GeneralSchwartz extends Character
 
     public GeneralSchwartz(int x, int y, ArrayList<Character> targets)
     {
-        super("General Schwartz", x, y, 100, 100, 150, 10, 1000, 10,
+        super("General Schwartz", x, y, 100, 100, 150, 1000, 10,
                 0, loadTexture("/BOSS1.png"));
         this.targets = targets;
 

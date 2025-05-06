@@ -107,29 +107,7 @@ public class GamePanel extends JPanel implements ActionListener
 
         } else if (level == 1)        //the story of the game
         {
-            boss = new Placeholder();
-            entities.add(boss);
-
-            JLabel label = new JLabel("<html>On one sunny day, from nowhere cataclysm occurred and portals were opened all over the world. From portals evil conquerors throughout the history were summoned. They conquered the world and injected the fear into all of the people who were still alive. Only a few of them, ordinary people like doctors & policemen were willing to fight. They should defeat all of the evil leaders to return the world to its peaceful times once again!!</html>");
-            label.setFont(new Font("Arial", Font.BOLD, 15));
-            label.setForeground(Color.WHITE);
-            label.setBounds(200, 100, 400, 400);
-
-            JButton button = new JButton("Continue");
-            button.setFocusable(false);
-            button.setFont(new Font("Arial", Font.PLAIN, 19));
-            button.setBounds(295, 400, 200, 75);
-            button.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    loadLevel(2);
-                }
-            });
-
-            add(button);
-            add(label);
+            loadMainMenu();
         } else if (level == 0)        //main menu
         {
             statusMessage = "";
@@ -143,7 +121,7 @@ public class GamePanel extends JPanel implements ActionListener
             boss = new Placeholder();
             entities.add(boss);
 
-            JButton startButton = new JButton("START THE GAME");
+            JButton startButton = new JButton("NEW GAME");
             startButton.setFocusable(false);
             startButton.setFont(new Font("Arial", Font.PLAIN, 19));
             startButton.setBounds(295, 250, 200, 75);
@@ -169,7 +147,7 @@ public class GamePanel extends JPanel implements ActionListener
                 }
             });
 
-            JButton loadButton = new JButton("LOAD GAME");
+            JButton loadButton = new JButton("CONTINUE");
             loadButton.setFocusable(false);
             loadButton.setFont(new Font("Arial", Font.PLAIN, 19));
             loadButton.setBounds(295, 325, 200, 75);
@@ -217,11 +195,10 @@ public class GamePanel extends JPanel implements ActionListener
             }
         }
 
-
         generateAttackButtons();
+        generateMainMenuButton();
 
     }
-
 
     private void generateAttackButtons()
     {
@@ -270,6 +247,54 @@ public class GamePanel extends JPanel implements ActionListener
             }
 
         }
+    }
+
+    private void generateMainMenuButton()
+    {
+        if(level >= 2)
+        {
+            JButton mainMenuButton = new JButton("MAIN MENU");
+            mainMenuButton.setFocusable(false);
+            mainMenuButton.setFont(new Font("Arial", Font.PLAIN, 8));
+            mainMenuButton.setBounds(0, 0, 75, 40);
+            mainMenuButton.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    loadLevel(0);
+                }
+            }
+            );
+            add(mainMenuButton);
+        }
+    }
+
+    private void loadMainMenu()
+    {
+        boss = new Placeholder();
+        entities.add(boss);
+
+        JLabel label = new JLabel("<html>On one sunny day, from nowhere cataclysm occurred and portals were opened all over the world. From portals evil conquerors throughout the history were summoned. They conquered the world and injected the fear into all of the people who were still alive. Only a few of them, ordinary people like doctors & policemen were willing to fight. They should defeat all of the evil leaders to return the world to its peaceful times once again!!</html>");
+        label.setFont(new Font("Arial", Font.BOLD, 15));
+        label.setForeground(Color.WHITE);
+        label.setBounds(200, 100, 400, 400);
+
+        JButton button = new JButton("Continue");
+        button.setFocusable(false);
+        button.setFont(new Font("Arial", Font.PLAIN, 19));
+        button.setBounds(295, 400, 200, 75);
+        button.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                loadLevel(2);
+            }
+        });
+
+        add(button);
+        add(label);
     }
 
     private boolean alivePlayers()

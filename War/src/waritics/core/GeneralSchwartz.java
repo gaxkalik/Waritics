@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class GeneralSchwartz extends Character
 {
     private ArrayList<Character> targets;
-    private int target;
+    private int track = 0;
 
 
 
@@ -23,16 +23,15 @@ public class GeneralSchwartz extends Character
 
     public void update()
     {
-        try
-        {
-            attack(targets.get(target%2));
-            target++;
-        }
-        catch (Exception e)
-        {
-            //System.out.println("essss");
+
+        if (targets.size() == 1)
             attack(targets.get(0));
+        else
+        {
+            track = 1 - track;
+            attack(targets.get(track));
         }
+
 
 
 

@@ -60,10 +60,17 @@ public class GamePanel extends JPanel implements ActionListener
             background = new ImageIcon(getClass().getResource("../textures/BG1.png")).getImage();
             Character p1 = new Doc(100, 400);
 
+            Character p2 = new Police(220, 400);
+
+
             boss = new ColonelAckermann(600, 400, players);
             entities.add(boss);
             players.add(p1);
             entities.add(p1);
+
+            players.add(p2);
+            entities.add(p2);
+
 
         } else if (level == 3)       //loads second level
         {
@@ -221,40 +228,42 @@ public class GamePanel extends JPanel implements ActionListener
     {
         for (int i = 0; i < players.size(); i++)
         {
-            if(!(players.get(i) instanceof Placeholder))
+
+            String name = players.get(i).name;
+            JButton attackButton = new JButton("<html>Attack<br>" + name + "</html>");
+
+            attackButton.setFont(new Font("Arial", Font.PLAIN, 8));
+            attackButton.setFocusable(false);
+            attackButton.setBounds(70 * i, 550, 70, 50);
+
+
+            Timer attackTimer = new Timer(players.get(i).attackSpeed, new ActionListener()
             {
-                JButton attackButton = new JButton("<html>Attack<br>" + players.get(i).name + "</html>");
-
-                attackButton.setFont(new Font("Arial", Font.PLAIN, 8));
-                attackButton.setFocusable(false);
-                attackButton.setBounds(70 * i, 550, 70, 50);
-
-
-                Timer attackTimer = new Timer(players.get(i).attackSpeed, new ActionListener()
+                public void actionPerformed(ActionEvent e)
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        attackButton.setEnabled(true);
-                        attackButton.setVisible(true);
-                    }
-                });
-                attackTimer.setRepeats(false);
+                    attackButton.setEnabled(true);
+                    attackButton.setVisible(true);
+                }
+            });
+            attackTimer.setRepeats(false);
 
-                attackButton.addActionListener(new ActionListener()
+            attackButton.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent e)
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        attackButton.setEnabled(false);
-                        attackButton.setVisible(false);
-                        int gridIndex = (int)(Math.random() * 40);
-                        attackButton.setBounds(attackButtonGrid.get(gridIndex)[0], attackButtonGrid.get(gridIndex)[1], 75, 50);
-                        attackTimer.start();
+                    attackButton.setEnabled(false);
+                    attackButton.setVisible(false);
+                    int gridIndex = (int) (Math.random() * 40);
+                    attackButton.setBounds(attackButtonGrid.get(gridIndex)[0], attackButtonGrid.get(gridIndex)[1], 75, 50);
+                    attackTimer.start();
 
-                        if (entities != null && players != null)
+                    if (entities != null && players != null)
+                    {
+                        for (int i = 0; i < players.size(); i++)
                         {
-                            for (int i = 0; i < players.size(); i++)
+                            if (players.get(i).isAlive() && boss.isAlive())
                             {
-                                if (players.get(i).isAlive() && boss.isAlive())
+                                if (players.get(i).name.equals(name))
                                 {
                                     players.get(i).attack(boss);
                                     statusMessage = players.get(i).name + " attacked " + boss.name + "!";
@@ -262,10 +271,11 @@ public class GamePanel extends JPanel implements ActionListener
                             }
                         }
                     }
-                });
+                }
+            });
 
-                add(attackButton);
-            }
+            add(attackButton);
+
 
         }
     }

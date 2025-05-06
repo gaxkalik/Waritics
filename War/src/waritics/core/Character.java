@@ -79,10 +79,6 @@ public abstract class Character
         g.drawString(name, x, y - 25);
     }
 
-    public Rectangle getBounds()
-    {
-        return new Rectangle(x, y, width, height);
-    }
 
     public boolean isAlive()
     {

@@ -1,11 +1,9 @@
 package waritics.core;
 
-import java.io.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class GamePanel extends JPanel implements ActionListener
 {
@@ -42,6 +40,7 @@ public class GamePanel extends JPanel implements ActionListener
         removeAll();
         entities.clear();
         players.clear();
+        statusMessage = "";
 
         if (level == 2)         //loads first level
         {
@@ -107,74 +106,10 @@ public class GamePanel extends JPanel implements ActionListener
 
         } else if (level == 1)        //the story of the game
         {
-            loadMainMenu();
+            loadMainStory();
         } else if (level == 0)        //main menu
         {
-            statusMessage = "";
-            background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
-
-            JLabel label = new JLabel("WARITICS");
-            label.setFont(new Font("Arial", Font.BOLD, 50));
-            label.setForeground(Color.LIGHT_GRAY);
-            label.setBounds(270, 100, 400, 100);
-
-            boss = new Placeholder();
-            entities.add(boss);
-
-            JButton startButton = new JButton("NEW GAME");
-            startButton.setFocusable(false);
-            startButton.setFont(new Font("Arial", Font.PLAIN, 19));
-            startButton.setBounds(295, 250, 200, 75);
-            startButton.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    loadLevel(1);
-                }
-            });
-
-            JButton exitButton = new JButton("EXIT GAME");
-            exitButton.setFocusable(false);
-            exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
-            exitButton.setBounds(295, 400, 200, 75);
-            exitButton.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    System.exit(0);
-                }
-            });
-
-            JButton loadButton = new JButton("CONTINUE");
-            loadButton.setFocusable(false);
-            loadButton.setFont(new Font("Arial", Font.PLAIN, 19));
-            loadButton.setBounds(295, 325, 200, 75);
-            loadButton.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    //System.out.println("sdfghj");
-                    try
-                    {
-                        config.loadFromDisc();
-                        loadLevel(config.level);
-                    } catch (Exception E)
-                    {
-                        loadLevel(0);
-                        statusMessage = "Error loading game!";
-                    }
-
-                }
-            });
-
-            add(loadButton);
-            add(startButton);
-            add(label);
-            add(exitButton);
-
+            loadMainMenu();
         } else            //more levels to come
         {
             background = new ImageIcon(getClass().getResource("../textures/BG3.jpeg")).getImage();
@@ -197,6 +132,75 @@ public class GamePanel extends JPanel implements ActionListener
 
         generateAttackButtons();
         generateMainMenuButton();
+
+    }
+
+    private void loadMainMenu()
+    {
+        statusMessage = "";
+        background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
+
+        JLabel label = new JLabel("WARITICS");
+        label.setFont(new Font("Arial", Font.BOLD, 50));
+        label.setForeground(Color.LIGHT_GRAY);
+        label.setBounds(270, 100, 400, 100);
+
+        boss = new Placeholder();
+        entities.add(boss);
+
+        JButton startButton = new JButton("NEW GAME");
+        startButton.setFocusable(false);
+        startButton.setFont(new Font("Arial", Font.PLAIN, 19));
+        startButton.setBounds(295, 250, 200, 75);
+        startButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                loadLevel(1);
+            }
+        });
+
+        JButton exitButton = new JButton("EXIT GAME");
+        exitButton.setFocusable(false);
+        exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
+        exitButton.setBounds(295, 400, 200, 75);
+        exitButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                System.exit(0);
+            }
+        });
+
+        JButton loadButton = new JButton("CONTINUE");
+        loadButton.setFocusable(false);
+        loadButton.setFont(new Font("Arial", Font.PLAIN, 19));
+        loadButton.setBounds(295, 325, 200, 75);
+        loadButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //System.out.println("sdfghj");
+                try
+                {
+                    config.loadFromDisc();
+                    loadLevel(config.level);
+                } catch (Exception E)
+                {
+                    loadLevel(0);
+                    statusMessage = "Error loading game!";
+                }
+
+            }
+        });
+
+        add(loadButton);
+        add(startButton);
+        add(label);
+        add(exitButton);
 
     }
 
@@ -270,7 +274,7 @@ public class GamePanel extends JPanel implements ActionListener
         }
     }
 
-    private void loadMainMenu()
+    private void loadMainStory()
     {
         boss = new Placeholder();
         entities.add(boss);
@@ -320,11 +324,11 @@ public class GamePanel extends JPanel implements ActionListener
         {
             g.setColor(Color.WHITE);
             g.drawString("Level: " + (level - 1), 700, 20);
-
+        }
             g.setColor(Color.RED);
             g.setFont(new Font("Arial", Font.BOLD, 18));
             g.drawString(statusMessage, 150, 25);
-        }
+
     }
 
 

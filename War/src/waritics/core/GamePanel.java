@@ -253,6 +253,7 @@ public class GamePanel extends JPanel implements ActionListener
         }
     }
 
+
     private void generateMainMenuButton()
     {
         if(level >= 2)

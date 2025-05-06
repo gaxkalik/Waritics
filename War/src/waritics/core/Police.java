@@ -6,7 +6,7 @@ public class Police extends Character
     {
         super("Policeman", x, y, 100, 100, 150, 800,
                 30, 20, Character.loadTexture("POL.png"));
-        good=true;
+        good = true;
     }
 
     public Police(int x, int y, int def, int dmg)
@@ -14,9 +14,5 @@ public class Police extends Character
         super("Policeman", x, y, 100, 100, 150, 800,
                 30 + dmg, 20 + def, Character.loadTexture("POL.png"));
         good=true;
-    }
-
-    public void update()
-    {
     }
 }

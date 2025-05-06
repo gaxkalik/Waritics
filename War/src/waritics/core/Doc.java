@@ -16,5 +16,5 @@ public class Doc extends Character
         good=true;
         superAttackTimer=0;
     }
-    public void update() {}
+
 }

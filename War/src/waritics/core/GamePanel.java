@@ -1,9 +1,12 @@
 package waritics.core;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class GamePanel extends JPanel implements ActionListener
 {
@@ -15,6 +18,7 @@ public class GamePanel extends JPanel implements ActionListener
     private Image background;
     private ArrayList<Character> players;       //list to store players
     private Config config;
+    private HashMap<Integer, Integer[]> attackButtonGrid;
 
     public GamePanel(int level)
     {
@@ -27,7 +31,16 @@ public class GamePanel extends JPanel implements ActionListener
         config = new Config(this);
         entities = new ArrayList<>();
         players = new ArrayList<>();
-
+        attackButtonGrid = new HashMap<Integer, Integer[]>(42);
+        int x = 50, y = 25;
+        for (int i = 0; i < 42; i++) {
+            if (i % 7 == 0) {
+                x = 50;
+                y += 75;
+            }
+            attackButtonGrid.put(i, new Integer[]{x, y});
+            x += 100;
+        }
         loadLevel(level);
 
         timer = new Timer(30, this);            //generates an event for game loop
@@ -222,7 +235,7 @@ public class GamePanel extends JPanel implements ActionListener
                     public void actionPerformed(ActionEvent e)
                     {
                         attackButton.setEnabled(true);
-
+                        attackButton.setVisible(true);
                     }
                 });
                 attackTimer.setRepeats(false);
@@ -232,7 +245,11 @@ public class GamePanel extends JPanel implements ActionListener
                     public void actionPerformed(ActionEvent e)
                     {
                         attackButton.setEnabled(false);
+                        attackButton.setVisible(false);
+                        int gridIndex = (int)(Math.random() * 40);
+                        attackButton.setBounds(attackButtonGrid.get(gridIndex)[0], attackButtonGrid.get(gridIndex)[1], 75, 50);
                         attackTimer.start();
+
                         if (entities != null && players != null)
                         {
                             for (int i = 0; i < players.size(); i++)
@@ -252,7 +269,6 @@ public class GamePanel extends JPanel implements ActionListener
 
         }
     }
-
 
     private void generateMainMenuButton()
     {
@@ -325,11 +341,11 @@ public class GamePanel extends JPanel implements ActionListener
         {
             g.setColor(Color.WHITE);
             g.drawString("Level: " + (level - 1), 700, 20);
-        }
+
             g.setColor(Color.RED);
             g.setFont(new Font("Arial", Font.BOLD, 18));
             g.drawString(statusMessage, 150, 25);
-
+        }
     }
 
 

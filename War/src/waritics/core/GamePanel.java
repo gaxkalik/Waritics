@@ -1,9 +1,12 @@
 package waritics.core;
 
+import java.io.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class GamePanel extends JPanel implements ActionListener
 {
@@ -15,6 +18,7 @@ public class GamePanel extends JPanel implements ActionListener
     private Image background;
     private ArrayList<Character> players;       //list to store players
     private Config config;
+    private HashMap<Integer, Integer[]> attackButtonGrid;
 
     public GamePanel(int level)
     {
@@ -27,7 +31,16 @@ public class GamePanel extends JPanel implements ActionListener
         config = new Config(this);
         entities = new ArrayList<>();
         players = new ArrayList<>();
-
+        attackButtonGrid = new HashMap<Integer, Integer[]>(42);
+        int x = 50, y = 25;
+        for (int i = 0; i < 42; i++) {
+            if (i % 7 == 0) {
+                x = 50;
+                y += 75;
+            }
+            attackButtonGrid.put(i, new Integer[]{x, y});
+            x += 100;
+        }
         loadLevel(level);
 
         timer = new Timer(30, this);            //generates an event for game loop
@@ -40,7 +53,6 @@ public class GamePanel extends JPanel implements ActionListener
         removeAll();
         entities.clear();
         players.clear();
-        statusMessage = "";
 
         if (level == 2)         //loads first level
         {
@@ -106,10 +118,96 @@ public class GamePanel extends JPanel implements ActionListener
 
         } else if (level == 1)        //the story of the game
         {
-            loadMainStory();
+            boss = new Placeholder();
+            entities.add(boss);
+
+            JLabel label = new JLabel("<html>On one sunny day, from nowhere cataclysm occurred and portals were opened all over the world. From portals evil conquerors throughout the history were summoned. They conquered the world and injected the fear into all of the people who were still alive. Only a few of them, ordinary people like doctors & policemen were willing to fight. They should defeat all of the evil leaders to return the world to its peaceful times once again!!</html>");
+            label.setFont(new Font("Arial", Font.BOLD, 15));
+            label.setForeground(Color.WHITE);
+            label.setBounds(200, 100, 400, 400);
+
+            JButton button = new JButton("Continue");
+            button.setFocusable(false);
+            button.setFont(new Font("Arial", Font.PLAIN, 19));
+            button.setBounds(295, 400, 200, 75);
+            button.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    loadLevel(2);
+                }
+            });
+
+            add(button);
+            add(label);
         } else if (level == 0)        //main menu
         {
-            loadMainMenu();
+            statusMessage = "";
+            background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
+
+            JLabel label = new JLabel("WARITICS");
+            label.setFont(new Font("Arial", Font.BOLD, 50));
+            label.setForeground(Color.LIGHT_GRAY);
+            label.setBounds(270, 100, 400, 100);
+
+            boss = new Placeholder();
+            entities.add(boss);
+
+            JButton startButton = new JButton("START THE GAME");
+            startButton.setFocusable(false);
+            startButton.setFont(new Font("Arial", Font.PLAIN, 19));
+            startButton.setBounds(295, 250, 200, 75);
+            startButton.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    loadLevel(1);
+                }
+            });
+
+            JButton exitButton = new JButton("EXIT GAME");
+            exitButton.setFocusable(false);
+            exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
+            exitButton.setBounds(295, 400, 200, 75);
+            exitButton.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    System.exit(0);
+                }
+            });
+
+            JButton loadButton = new JButton("LOAD GAME");
+            loadButton.setFocusable(false);
+            loadButton.setFont(new Font("Arial", Font.PLAIN, 19));
+            loadButton.setBounds(295, 325, 200, 75);
+            loadButton.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    //System.out.println("sdfghj");
+                    try
+                    {
+                        config.loadFromDisc();
+                        loadLevel(config.level);
+                    } catch (Exception E)
+                    {
+                        loadLevel(0);
+                        statusMessage = "Error loading game!";
+                    }
+
+                }
+            });
+
+            add(loadButton);
+            add(startButton);
+            add(label);
+            add(exitButton);
+
         } else            //more levels to come
         {
             background = new ImageIcon(getClass().getResource("../textures/BG3.jpeg")).getImage();
@@ -130,79 +228,11 @@ public class GamePanel extends JPanel implements ActionListener
             }
         }
 
+
         generateAttackButtons();
-        generateMainMenuButton();
 
     }
 
-    private void loadMainMenu()
-    {
-        statusMessage = "";
-        background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
-
-        JLabel label = new JLabel("WARITICS");
-        label.setFont(new Font("Arial", Font.BOLD, 50));
-        label.setForeground(Color.LIGHT_GRAY);
-        label.setBounds(270, 100, 400, 100);
-
-        boss = new Placeholder();
-        entities.add(boss);
-
-        JButton startButton = new JButton("NEW GAME");
-        startButton.setFocusable(false);
-        startButton.setFont(new Font("Arial", Font.PLAIN, 19));
-        startButton.setBounds(295, 250, 200, 75);
-        startButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                loadLevel(1);
-            }
-        });
-
-        JButton exitButton = new JButton("EXIT GAME");
-        exitButton.setFocusable(false);
-        exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
-        exitButton.setBounds(295, 400, 200, 75);
-        exitButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                System.exit(0);
-            }
-        });
-
-        JButton loadButton = new JButton("CONTINUE");
-        loadButton.setFocusable(false);
-        loadButton.setFont(new Font("Arial", Font.PLAIN, 19));
-        loadButton.setBounds(295, 325, 200, 75);
-        loadButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                //System.out.println("sdfghj");
-                try
-                {
-                    config.loadFromDisc();
-                    loadLevel(config.level);
-                } catch (Exception E)
-                {
-                    loadLevel(0);
-                    statusMessage = "Error loading game!";
-                }
-
-            }
-        });
-
-        add(loadButton);
-        add(startButton);
-        add(label);
-        add(exitButton);
-
-    }
 
     private void generateAttackButtons()
     {
@@ -222,7 +252,7 @@ public class GamePanel extends JPanel implements ActionListener
                     public void actionPerformed(ActionEvent e)
                     {
                         attackButton.setEnabled(true);
-
+                        attackButton.setVisible(true);
                     }
                 });
                 attackTimer.setRepeats(false);
@@ -232,7 +262,11 @@ public class GamePanel extends JPanel implements ActionListener
                     public void actionPerformed(ActionEvent e)
                     {
                         attackButton.setEnabled(false);
+                        attackButton.setVisible(false);
+                        int gridIndex = (int)(Math.random() * 40);
+                        attackButton.setBounds(attackButtonGrid.get(gridIndex)[0], attackButtonGrid.get(gridIndex)[1], 75, 50);
                         attackTimer.start();
+
                         if (entities != null && players != null)
                         {
                             for (int i = 0; i < players.size(); i++)
@@ -251,54 +285,6 @@ public class GamePanel extends JPanel implements ActionListener
             }
 
         }
-    }
-
-    private void generateMainMenuButton()
-    {
-        if(level >= 2)
-        {
-            JButton mainMenuButton = new JButton("MAIN MENU");
-            mainMenuButton.setFocusable(false);
-            mainMenuButton.setFont(new Font("Arial", Font.PLAIN, 8));
-            mainMenuButton.setBounds(0, 0, 75, 40);
-            mainMenuButton.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    loadLevel(0);
-                }
-            }
-            );
-            add(mainMenuButton);
-        }
-    }
-
-    private void loadMainStory()
-    {
-        boss = new Placeholder();
-        entities.add(boss);
-
-        JLabel label = new JLabel("<html>On one sunny day, from nowhere cataclysm occurred and portals were opened all over the world. From portals evil conquerors throughout the history were summoned. They conquered the world and injected the fear into all of the people who were still alive. Only a few of them, ordinary people like doctors & policemen were willing to fight. They should defeat all of the evil leaders to return the world to its peaceful times once again!!</html>");
-        label.setFont(new Font("Arial", Font.BOLD, 15));
-        label.setForeground(Color.WHITE);
-        label.setBounds(200, 100, 400, 400);
-
-        JButton button = new JButton("Continue");
-        button.setFocusable(false);
-        button.setFont(new Font("Arial", Font.PLAIN, 19));
-        button.setBounds(295, 400, 200, 75);
-        button.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                loadLevel(2);
-            }
-        });
-
-        add(button);
-        add(label);
     }
 
     private boolean alivePlayers()
@@ -324,11 +310,11 @@ public class GamePanel extends JPanel implements ActionListener
         {
             g.setColor(Color.WHITE);
             g.drawString("Level: " + (level - 1), 700, 20);
-        }
+
             g.setColor(Color.RED);
             g.setFont(new Font("Arial", Font.BOLD, 18));
             g.drawString(statusMessage, 150, 25);
-
+        }
     }
 
 

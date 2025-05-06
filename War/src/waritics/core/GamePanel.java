@@ -19,6 +19,7 @@ public class GamePanel extends JPanel implements ActionListener
     private ArrayList<Character> players;       //list to store players
     private Config config;
     private HashMap<Integer, Integer[]> attackButtonGrid;
+    private int damage = 0, defense = 0;
 
     public GamePanel(int level)
     {
@@ -49,7 +50,8 @@ public class GamePanel extends JPanel implements ActionListener
 
     private void loadLevel(int level)
     {
-        this.level = level;
+        if (level != -2)
+            this.level = level;
         removeAll();
         entities.clear();
         players.clear();
@@ -69,7 +71,7 @@ public class GamePanel extends JPanel implements ActionListener
         {
             background = new ImageIcon(getClass().getResource("../textures/BG2.jpeg")).getImage();
 
-            Character p1 = new Police(130, 440);
+            Character p1 = new Police(130, 440, defense, damage);
             boss = new GeneralSchwartz(600, 400, players);
             entities.add(boss);
             entities.add(p1);
@@ -123,6 +125,8 @@ public class GamePanel extends JPanel implements ActionListener
         } else if (level == 0)        //main menu
         {
             loadMainMenu();
+        } else if (level == -2) {
+            loadEquipmentMenu();
         } else            //more levels to come
         {
             background = new ImageIcon(getClass().getResource("../textures/BG3.jpeg")).getImage();
@@ -318,6 +322,38 @@ public class GamePanel extends JPanel implements ActionListener
         add(label);
     }
 
+    private void loadEquipmentMenu()
+    {
+        boss = new Placeholder();
+        entities.add(boss);
+
+        JButton armorButton = new JButton("Armor: +3");
+        armorButton.setFocusable(false);
+        armorButton.setFont(new Font("Arial", Font.PLAIN, 8));
+        armorButton.setBounds(200, 250, 100, 50);
+        armorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                defense += 3;
+                System.out.println(level);
+                loadLevel(++level);
+            }
+        });
+        JButton weaponButton = new JButton("Damage: +3");
+        weaponButton.setFocusable(false);
+        weaponButton.setFont(new Font("Arial", Font.PLAIN, 8));
+        weaponButton.setBounds(400, 250, 100, 50);
+        weaponButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                damage += 3;
+                loadLevel(++level);
+            }
+        });
+        add(armorButton);
+        add(weaponButton);
+    }
+
     private boolean alivePlayers()
     {
         for (int i = 0; i < players.size(); i++)
@@ -362,7 +398,8 @@ public class GamePanel extends JPanel implements ActionListener
         }
         else
         {
-            loadLevel(++level);
+
+            loadLevel(-2);
             statusMessage = "Level Up! Welcome to Level " + level;
         }
 

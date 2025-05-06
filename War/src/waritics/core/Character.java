@@ -14,7 +14,6 @@ public abstract class Character
     protected BufferedImage texture;
     protected Equipment weapon, armor;
     protected String name;
-    protected Rarity rarity;
     public boolean good;
     private long lastAttackTime = 0;
 

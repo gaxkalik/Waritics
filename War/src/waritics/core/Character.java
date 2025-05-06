@@ -3,6 +3,7 @@ package waritics.core;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public abstract class Character
 {
@@ -17,6 +18,8 @@ public abstract class Character
     protected Rarity rarity;
     public boolean good;
     private long lastAttackTime = 0;
+    protected ArrayList<Character> targets;
+    protected int track = 0;
 
     public Character(String name, int x, int y, int width, int height, int health,
                      int attackSpeed, int attack, int defence, BufferedImage texture)
@@ -35,7 +38,19 @@ public abstract class Character
         this.weapon = null;
     }
 
-    public abstract void update();
+
+    public void attack ()
+    {
+        if (targets == null || targets.size() == 0)
+            return;
+        if (targets.size() == 1)
+            attack(targets.get(0));
+        else
+        {
+            track = 1 - track;
+            attack(targets.get(track));
+        }
+    }
 
     public void attack(Character target)
     {
@@ -54,7 +69,6 @@ public abstract class Character
     {
         long currentTime = System.currentTimeMillis();
 
-
         g.drawImage(texture, x, y, width, height, null);
 
         // Health bar
@@ -64,7 +78,7 @@ public abstract class Character
         int healthBarWidth = (int) (((double) health / maxHealth) * width);
         g.fillRect(x, y - 10, healthBarWidth, 5);
 
-
+        //Attack speed bar
         g.setColor(Color.RED);
         g.fillRect(x, y - 20, width, 5);
         g.setColor(Color.BLUE);
@@ -72,8 +86,6 @@ public abstract class Character
         if (attackBarWidth >= width)
             attackBarWidth =width;
         g.fillRect(x, y - 20, (int)attackBarWidth, 5);
-
-
 
         g.setColor(Color.WHITE);
         g.drawString(name, x, y - 25);
@@ -112,7 +124,6 @@ public abstract class Character
         if (equipment.equipmentType == Equipment.EquipmentType.WEAPON) this.weapon = equipment;
         if (equipment.equipmentType == Equipment.EquipmentType.ARMOR) this.armor = equipment;
     }
-
 
     public int getDefence() {
         if (armor == null) return defence;

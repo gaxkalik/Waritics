@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements ActionListener
         }
         loadLevel(level);
 
-        timer = new Timer(30, this);            //generates an event for game loop
+        timer = new Timer(50, this);            //generates an event for game loop
         timer.start();
     }
 
@@ -72,7 +72,8 @@ public class GamePanel extends JPanel implements ActionListener
             entities.add(p2);
 
 
-        } else if (level == 3)       //loads second level
+        }
+        else if (level == 3)       //loads second level
         {
             background = new ImageIcon(getClass().getResource("../textures/BG2.jpeg")).getImage();
 
@@ -81,7 +82,8 @@ public class GamePanel extends JPanel implements ActionListener
             entities.add(boss);
             entities.add(p1);
             players.add(p1);
-        } else if (level == -1)       //the game over screen
+        }
+        else if (level == -1)       //the game over screen
         {
             boss = new Placeholder();
             entities.add(boss);
@@ -124,13 +126,16 @@ public class GamePanel extends JPanel implements ActionListener
             add(startButton);
             add(exitButton);
 
-        } else if (level == 1)        //the story of the game
+        }
+        else if (level == 1)        //the story of the game
         {
             loadMainStory();
-        } else if (level == 0)        //main menu
+        }
+        else if (level == 0)        //main menu
         {
             loadMainMenu();
-        } else            //more levels to come
+        }
+        else            //more levels to come
         {
             background = new ImageIcon(getClass().getResource("../textures/BG3.jpeg")).getImage();
             //player = new Police(100, 100);
@@ -330,10 +335,18 @@ public class GamePanel extends JPanel implements ActionListener
 
     private boolean alivePlayers()
     {
+
+        if(players == null || players.size()==0)
+            return true;
         for (int i = 0; i < players.size(); i++)
+        {
             if(!players.get(i).isAlive())
-                return false;
-        return true;
+                players.remove(i);
+        }
+        for (int i = 0; i < players.size(); i++)
+             if(players.get(i).isAlive())
+                return true;
+        return false;
     }
 
 
@@ -368,7 +381,7 @@ public class GamePanel extends JPanel implements ActionListener
         }
         else if (boss.isAlive())
         {
-            boss.update();
+            boss.attack();
         }
         else
         {

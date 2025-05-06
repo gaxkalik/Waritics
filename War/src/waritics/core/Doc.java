@@ -10,5 +10,4 @@ public class Doc extends Character
         superAttackTimer=0;
     }
 
-    public void update() {}
 }

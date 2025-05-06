@@ -8,18 +8,38 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * The {@code GamePanel} class represents the main panel where the game is rendered and logic is executed.
+ * It manages game entities, levels, user interface elements, and the game loop.
+ * This panel extends {@code JPanel} and implements {@code ActionListener} to handle timer events.
+ */
 public class GamePanel extends JPanel implements ActionListener
 {
+    /**The timer that triggers game updates and repaints at a fixed interval.*/
     private final Timer timer;
-    private ArrayList<Character> entities;      //list to store all entities that are shown on the screen
+    /**A list to store all {@code Character} entities that are currently displayed on the screen.*/
+    private ArrayList<Character> entities;
+    /**The main boss character in the current game level.*/
     private Character boss;
+    /**A message to display game status or information to the player.*/
     private String statusMessage = "";
+    /**The current level of the game.*/
     int level = 0;
+    /**The background image for the current game level or screen.*/
     private Image background;
-    private ArrayList<Character> players;       //list to store players
+    /**A list to store the player-controlled {@code Character} entities.*/
+    private ArrayList<Character> players;
+    /** An instance of the {@code Config} class to handle game configuration loading and saving.*/
     private Config config;
+    /**A map to store the grid coordinates for the attack buttons. The key is an index, and the value is an array containing the x and y coordinates.*/
     private HashMap<Integer, Integer[]> attackButtonGrid;
 
+    /**
+     * Constructs a new {@code GamePanel} for a specific game level.
+     * Initializes the panel, sets up basic configurations, loads the level, and starts the game timer.
+     *
+     * @param level The initial game level to load.
+     */
     public GamePanel(int level)
     {
         setPreferredSize(new Dimension(800, 600));
@@ -47,6 +67,20 @@ public class GamePanel extends JPanel implements ActionListener
         timer.start();
     }
 
+    /**
+     * Loads the game elements and UI components for a given level.
+     * This method clears existing entities and players, sets the background,
+     * creates characters based on the level, and generates attack buttons and the main menu button.
+     * It also handles loading and saving game configuration.
+     *
+     * @param level The level to load. Different integer values correspond to different game states:
+     *  0: Main Menu
+     *  1: Game Story
+     *  2: Level 1
+     *  3: Level 2
+     * -1: Game Over Screen
+     *  Other positive integers: Future levels
+     */
     private void loadLevel(int level)
     {
         this.level = level;
@@ -160,6 +194,11 @@ public class GamePanel extends JPanel implements ActionListener
 
     }
 
+
+    /**
+     * Loads and displays the main menu screen with options to start a new game, continue, or exit.
+     * Sets the background and adds buttons to the panel.
+     */
     private void loadMainMenu()
     {
         statusMessage = "";
@@ -229,6 +268,13 @@ public class GamePanel extends JPanel implements ActionListener
 
     }
 
+
+    /**
+     * Generates attack buttons for each player in the game.
+     * Each button is associated with a specific player and triggers their attack action on the boss.
+     * The buttons are initially placed at the bottom of the screen and then move to random grid locations when being clicked,
+     * becoming available again after a cooldown based on the player's attack speed.
+     */
     private void generateAttackButtons()
     {
         for (int i = 0; i < players.size(); i++)
@@ -285,6 +331,11 @@ public class GamePanel extends JPanel implements ActionListener
         }
     }
 
+
+    /**
+     * Generates a button that allows the player to return to the main menu from gameplay levels (level >= 2).
+     * This button is positioned at the top-left corner of the screen.
+     */
     private void generateMainMenuButton()
     {
         if(level >= 2)
@@ -306,6 +357,11 @@ public class GamePanel extends JPanel implements ActionListener
         }
     }
 
+
+    /**
+     * Loads and displays the initial story of the game.
+     * Presents a story text and a button to proceed to the first gameplay level.
+     */
     private void loadMainStory()
     {
         boss = new Placeholder();
@@ -333,6 +389,13 @@ public class GamePanel extends JPanel implements ActionListener
         add(label);
     }
 
+
+    /**
+     * Checks if there is at least one alive player in the {@code players} list.
+     * It also removes any players who are no longer alive from the list.
+     *
+     * @return {@code true} if there is at least one alive player; {@code false} otherwise.
+     */
     private boolean alivePlayers()
     {
 
@@ -350,6 +413,13 @@ public class GamePanel extends JPanel implements ActionListener
     }
 
 
+    /**
+     * Overrides the {@code paintComponent} method to draw the game elements on the panel.
+     * This includes drawing the background image and all alive entities.
+     * It also displays the current level and any status messages during gameplay.
+     *
+     * @param g The {@code Graphics} object used for drawing.
+     */
     @Override
     protected void paintComponent(Graphics g)
     {
@@ -372,6 +442,13 @@ public class GamePanel extends JPanel implements ActionListener
     }
 
 
+    /**
+     * Invoked by the game timer at regular intervals.
+     * This method updates the game state, checks for game over or level completion conditions,
+     * triggers boss attacks, and requests a repaint of the panel.
+     *
+     * @param e The {@code ActionEvent} generated by the timer.
+     */
     @Override
     public void actionPerformed(ActionEvent e)      //timer activates this every 20ms
     {

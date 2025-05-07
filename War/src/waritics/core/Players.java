@@ -20,14 +20,13 @@ public abstract class Players extends Character
     protected abstract void specialAbility();
 
 
-
     public void attack(Character target)
     {
         super.attack(target);
         attaksDone++;
     }
 
-    public void addAttackButon(GamePanel panel)
+    void addAttackButon(GamePanel panel)
     {
 
 
@@ -56,13 +55,13 @@ public abstract class Players extends Character
                 int gridIndex = (int) (Math.random() * 40);
 
 
-                attackButton.setBounds(panel.attackButtonGrid.get(gridIndex)[0], panel.attackButtonGrid.get(gridIndex)[1], 75, 50);
+                attackButton.setBounds(panel.getAttackButtonGrid().get(gridIndex)[0], panel.getAttackButtonGrid().get(gridIndex)[1], 75, 50);
                 attackTimer.start();
 
-                if (isAlive() && panel.boss.isAlive())
+                if (isAlive() && panel.getBoss().isAlive())
                 {
 
-                    attack(panel.boss);
+                    attack(panel.getBoss());
                     //statusMessage = players.get(i).name + " attacked " + boss.name + "!";
                 }
             }
@@ -72,7 +71,7 @@ public abstract class Players extends Character
 
     }
 
-    public JButton addSuperAttackButon(GamePanel panel)
+    JButton addSuperAttackButon(GamePanel panel)
     {
         JButton superAttackButton = new JButton("<html>SUPER<br>" + name + "</html>");
 
@@ -88,7 +87,7 @@ public abstract class Players extends Character
                 superAttackButton.setEnabled(false);
                 superAttackButton.setVisible(false);
 
-                if (isAlive() && panel.boss.isAlive())
+                if (isAlive() && panel.getBoss().isAlive())
                 {
                     specialAbility();
                     //statusMessage = players.get(i).name + " attacked " + boss.name + "!";
@@ -98,6 +97,11 @@ public abstract class Players extends Character
 
         return superAttackButton;
 
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
 

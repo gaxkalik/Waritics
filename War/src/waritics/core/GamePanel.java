@@ -3,6 +3,7 @@ package waritics.core;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -14,24 +15,27 @@ import java.util.Scanner;
  */
 public class GamePanel extends JPanel implements ActionListener
 {
+    public static final int NUMBER_OF_BACKGROUNDS = 5;
+    private int currentBG;
     /**The timer that triggers game updates and repaints at a fixed interval.*/
     private final Timer timer;
     /**A list to store all {@code Character} entities that are currently displayed on the screen.*/
-    ArrayList<Character> entities;
+    private ArrayList<Character> entities;
     /**The main boss character in the current game level.*/
-    Character boss;
+    private Character boss;
     /**A message to display game status or information to the player.*/
     private String statusMessage = "";
     /**The current level of the game.*/
-    int level = 0;
+    private int level = 0;
     /**The background image for the current game level or screen.*/
     private Image background;
+    private Image [] backgroundS;
     /**A list to store the player-controlled {@code Character} entities.*/
-    ArrayList<Players> players;
+    private ArrayList<Players> players;
     /** An instance of the {@code Config} class to handle game configuration loading and saving.*/
     private Config config;
     /**A map to store the grid coordinates for the attack buttons. The key is an index, and the value is an array containing the x and y coordinates.*/
-    HashMap<Integer, Integer[]> attackButtonGrid;
+    private HashMap<Integer, Integer[]> attackButtonGrid;
     private int damage = 0, defense = 0;
 
     /**
@@ -51,6 +55,8 @@ public class GamePanel extends JPanel implements ActionListener
         config = new Config(this);
         entities = new ArrayList<>();
         players = new ArrayList<>();
+        loadBackgrounds();
+
         attackButtonGrid = new HashMap<Integer, Integer[]>(42);
         int x = 50, y = 25;
         for (int i = 0; i < 42; i++) {
@@ -63,8 +69,11 @@ public class GamePanel extends JPanel implements ActionListener
         }
         loadLevel(level);
 
+
         timer = new Timer(50, this);            //generates an event for game loop
         timer.start();
+
+
     }
 
     /**
@@ -92,29 +101,46 @@ public class GamePanel extends JPanel implements ActionListener
 
         if (level == 2)         //loads first level
         {
-            background = new ImageIcon(getClass().getResource("../textures/BG1.png")).getImage();
-            boss = new ColonelAckermann(600, 400, players);
+            background = backgroundS[currentBG++];
+            boss = new ColonelAckermann(550, 350, players);
 
-            Players p1 = new Doc(100, 400);
-            Players p2 = new Police(220, 400, boss);
+            Players p1 = new Doc(50, 350, defense, damage);
+            //Players p2 = new Police(220, 400, boss);
 
             entities.add(boss);
             players.add(p1);
             entities.add(p1);
 
-            players.add(p2);
-            entities.add(p2);
+            //players.add(p2);
+            //entities.add(p2);
 
         }
         else if (level == 3)       //loads second level
         {
-            background = new ImageIcon(getClass().getResource("../textures/BG2.jpeg")).getImage();
+            currentBG=1;
+            background = backgroundS[currentBG++];
+            boss = new GeneralSchwartz(550, 350, players);
+            Players p1 = new Police(70, 390, defense, damage, boss);
 
-            Players p1 = new Police(130, 440, defense, damage, boss);
-            boss = new GeneralSchwartz(600, 400, players);
             entities.add(boss);
             entities.add(p1);
             players.add(p1);
+        }
+        else if (level == 4)
+        {
+            currentBG=2;
+            background = backgroundS[currentBG++];
+            boss = new GeneralSchwartz(450, 370, players);
+            Players p1 = new Police(130, 400, defense, damage, boss);
+            p1.setId(0);
+            Players p2 = new Doc(250, 350, defense,damage);
+            p2.setId(1);
+            entities.add(boss);
+            entities.add(p1);
+            entities.add(p2);
+            players.add(p1);
+            players.add(p2);
+
         }
         else if (level == -1)       //the game over screen
         {
@@ -134,7 +160,8 @@ public class GamePanel extends JPanel implements ActionListener
         }
         else            //more levels to come
         {
-            background = new ImageIcon(getClass().getResource("../textures/BG3.jpeg")).getImage();
+            currentBG=4;
+            background = backgroundS[currentBG++];
             //player = new Police(100, 100);
             boss = new ColonelAckermann(400, 400, players);
             entities.add(boss);
@@ -160,6 +187,23 @@ public class GamePanel extends JPanel implements ActionListener
 
     }
 
+
+    public void loadBackgrounds()
+    {
+        backgroundS = new Image[NUMBER_OF_BACKGROUNDS];
+        System.out.println(getClass().getResource("../textures/BG"+ (5-1) +".png"));
+        try
+        {
+            for (int i = 0; i < NUMBER_OF_BACKGROUNDS; i++)
+            {
+                backgroundS[i] = new ImageIcon(getClass().getResource("../textures/BG"+ i +".png")).getImage();
+            }
+        }
+        catch (EnumConstantNotPresentException E)
+        {
+            statusMessage = "Error loading background!";
+        }
+    }
 
     /**
      * Loads and displays the main menu screen with options to start a new game, continue, or exit.
@@ -399,7 +443,15 @@ public class GamePanel extends JPanel implements ActionListener
         add(label);
     }
 
+    public Character getBoss()
+    {
+        return boss;
+    }
 
+    public int getLevel()
+    {
+        return level;
+    }
 
     private void loadEquipmentMenu()
     {
@@ -455,10 +507,11 @@ public class GamePanel extends JPanel implements ActionListener
         return false;
     }
 
-    public Character getBoss()
+    public HashMap<Integer, Integer[]> getAttackButtonGrid()
     {
-        return boss;
+        return attackButtonGrid;
     }
+
 
 
     /**
@@ -498,7 +551,6 @@ public class GamePanel extends JPanel implements ActionListener
      * @param e The {@code ActionEvent} generated by the timer.
      */
 
-    int i=1;
 
     @Override
     public void actionPerformed(ActionEvent e)      //timer activates this every 20ms

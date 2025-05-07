@@ -141,7 +141,7 @@ public abstract class Character
         g.fillRect(x, y - 10, healthBarWidth, 5);
 
         //Attack speed bar
-        g.setColor(Color.RED);
+        g.setColor(Color.GRAY);
         g.fillRect(x, y - 20, width, 5);
         g.setColor(Color.BLUE);
         long attackBarWidth = (int) (((double)(currentTime - lastAttackTime) /attackSpeed) * width);

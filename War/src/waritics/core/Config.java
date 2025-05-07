@@ -15,7 +15,7 @@ public class Config
 
     void saveToDisc() throws Exception
     {
-        this.level = gamePanel.level;
+        this.level = gamePanel.getLevel();
         PrintWriter writer = null;
         File file = new File(getClass().getResource("../saves/save.txt").getFile());
         writer = new PrintWriter(new FileOutputStream(file));

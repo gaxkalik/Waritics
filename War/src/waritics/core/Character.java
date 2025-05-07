@@ -38,8 +38,6 @@ public abstract class Character
     protected Equipment armor;
     /**The name of the character.*/
     protected String name;
-    /**The rarity of the character (e.g., Common, Rare, Epic).*/
-    protected Rarity rarity;
     /**A boolean indicating if the character is considered "good" (e.g., a player character).*/
     public boolean good;
     /**The timestamp of the last attack performed by the character, used for attack speed regulation.*/

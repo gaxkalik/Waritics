@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements ActionListener
     /**The background image for the current game level or screen.*/
     private Image background;
     /**A list to store the player-controlled {@code Character} entities.*/
-    ArrayList<Character> players;
+    ArrayList<Players> players;
     /** An instance of the {@code Config} class to handle game configuration loading and saving.*/
     private Config config;
     /**A map to store the grid coordinates for the attack buttons. The key is an index, and the value is an array containing the x and y coordinates.*/
@@ -93,12 +93,11 @@ public class GamePanel extends JPanel implements ActionListener
         if (level == 2)         //loads first level
         {
             background = new ImageIcon(getClass().getResource("../textures/BG1.png")).getImage();
-            Character p1 = new Doc(100, 400);
-
-            Character p2 = new Police(220, 400);
-
-
             boss = new ColonelAckermann(600, 400, players);
+
+            Players p1 = new Doc(100, 400);
+            Players p2 = new Police(220, 400, boss);
+
             entities.add(boss);
             players.add(p1);
             entities.add(p1);
@@ -106,15 +105,12 @@ public class GamePanel extends JPanel implements ActionListener
             players.add(p2);
             entities.add(p2);
 
-            p1.addAttackButon(this);
-            p2.addAttackButon(this);
-
         }
         else if (level == 3)       //loads second level
         {
             background = new ImageIcon(getClass().getResource("../textures/BG2.jpeg")).getImage();
 
-            Character p1 = new Police(130, 440, defense, damage);
+            Players p1 = new Police(130, 440, defense, damage, boss);
             boss = new GeneralSchwartz(600, 400, players);
             entities.add(boss);
             entities.add(p1);
@@ -122,47 +118,7 @@ public class GamePanel extends JPanel implements ActionListener
         }
         else if (level == -1)       //the game over screen
         {
-            boss = new Placeholder();
-            entities.add(boss);
-
-            background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
-
-            JLabel label = new JLabel("GAME OVER");
-            label.setFont(new Font("Arial", Font.PLAIN, 50));
-            label.setForeground(new Color(247, 68, 2));
-
-            label.setBounds(270, 100, 400, 100);
-
-            JButton startButton = new JButton("MAIN MENU");
-            startButton.setFocusable(false);
-            startButton.setFont(new Font("Arial", Font.PLAIN, 19));
-            startButton.setBounds(295, 250, 200, 75);
-            startButton.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    loadLevel(0);
-                }
-            });
-
-            JButton exitButton = new JButton("EXIT GAME");
-            exitButton.setFocusable(false);
-            exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
-            exitButton.setBounds(295, 325, 200, 75);
-            exitButton.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    System.exit(0);
-                }
-            });
-
-            add(label);
-            add(startButton);
-            add(exitButton);
-
+            loadGameOverScreen();
         }
         else if (level == 1)        //the story of the game
         {
@@ -195,6 +151,9 @@ public class GamePanel extends JPanel implements ActionListener
                 statusMessage = "Error saving game!";
             }
         }
+
+        for (Players p : players)
+            p.addAttackButon(this);
 
         //generateAttackButtons();
         generateMainMenuButton();
@@ -275,13 +234,57 @@ public class GamePanel extends JPanel implements ActionListener
 
     }
 
+    private void loadGameOverScreen()
+    {
+        boss = new Placeholder();
+        entities.add(boss);
 
+        background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
+
+        JLabel label = new JLabel("GAME OVER");
+        label.setFont(new Font("Arial", Font.PLAIN, 50));
+        label.setForeground(new Color(247, 68, 2));
+
+        label.setBounds(270, 100, 400, 100);
+
+        JButton startButton = new JButton("MAIN MENU");
+        startButton.setFocusable(false);
+        startButton.setFont(new Font("Arial", Font.PLAIN, 19));
+        startButton.setBounds(295, 250, 200, 75);
+        startButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                loadLevel(0);
+            }
+        });
+
+        JButton exitButton = new JButton("EXIT GAME");
+        exitButton.setFocusable(false);
+        exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
+        exitButton.setBounds(295, 325, 200, 75);
+        exitButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                System.exit(0);
+            }
+        });
+
+        add(label);
+        add(startButton);
+        add(exitButton);
+    }
+
+/*
     /**
      * Generates attack buttons for each player in the game.
      * Each button is associated with a specific player and triggers their attack action on the boss.
      * The buttons are initially placed at the bottom of the screen and then move to random grid locations when being clicked,
      * becoming available again after a cooldown based on the player's attack speed.
-     */
+     *
     private void generateAttackButtons()
     {
         for (int i = 0; i < players.size(); i++)
@@ -338,7 +341,7 @@ public class GamePanel extends JPanel implements ActionListener
         }
     }
 
-
+*/
     /**
      * Generates a button that allows the player to return to the main menu from gameplay levels (level >= 2).
      * This button is positioned at the top-left corner of the screen.
@@ -452,6 +455,11 @@ public class GamePanel extends JPanel implements ActionListener
         return false;
     }
 
+    public Character getBoss()
+    {
+        return boss;
+    }
+
 
     /**
      * Overrides the {@code paintComponent} method to draw the game elements on the panel.
@@ -489,15 +497,27 @@ public class GamePanel extends JPanel implements ActionListener
      *
      * @param e The {@code ActionEvent} generated by the timer.
      */
+
+    int i=1;
+
     @Override
     public void actionPerformed(ActionEvent e)      //timer activates this every 20ms
     {
+
         if(!alivePlayers())
         {
             loadLevel(-1);
         }
         else if (boss.isAlive())
         {
+            for (Players p : players)
+            {
+                if(p.attaksDone == 3)
+                {
+                    p.attaksDone = 0;
+                    add(p.addSuperAttackButon(this));
+                }
+            }
             boss.attack();
         }
         else

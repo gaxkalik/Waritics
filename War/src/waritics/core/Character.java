@@ -1,6 +1,7 @@
 package waritics.core;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -38,16 +39,15 @@ public abstract class Character
     protected Equipment armor;
     /**The name of the character.*/
     protected String name;
-    /**A boolean indicating if the character is considered "good" (e.g., a player character).*/
-    public boolean good;
     /**The timestamp of the last attack performed by the character, used for attack speed regulation.*/
     private long lastAttackTime = 0;
     /**A list of target characters that this character can attack.*/
-    protected ArrayList<Character> targets;
+    protected ArrayList<Players> targets;
     /**An internal tracker used when the character has multiple targets to alternate between them.*/
     protected int track = 0;
 
-    protected int id;
+
+
 
     /**
      * Constructs a new {@code Character} with the specified attributes.
@@ -98,7 +98,12 @@ public abstract class Character
         }
     }
 
-    public abstract void addAttackButon(GamePanel panel);
+    public void attack(Character target, int damage)
+    {
+        target.takeDamage(damage);
+    }
+
+
 
     /**
      * Attacks a specific target character, applying damage based on this character's attack power.
@@ -112,6 +117,7 @@ public abstract class Character
         if (currentTime - lastAttackTime >= attackSpeed)
         {
             target.takeDamage(this.getAttack());
+
             lastAttackTime = currentTime;
         }
     }

@@ -106,6 +106,8 @@ public class GamePanel extends JPanel implements ActionListener
             players.add(p2);
             entities.add(p2);
 
+            p1.addAttackButon(this);
+            p2.addAttackButon(this);
 
         }
         else if (level == 3)       //loads second level

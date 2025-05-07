@@ -3,10 +3,8 @@ package waritics.core;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 /**
  * The {@code GamePanel} class represents the main panel where the game is rendered and logic is executed.
@@ -55,7 +53,7 @@ public class GamePanel extends JPanel implements ActionListener
         config = new Config(this);
         entities = new ArrayList<>();
         players = new ArrayList<>();
-        loadBackgrounds();
+        loadBackgroundsImages();
 
         attackButtonGrid = new HashMap<Integer, Integer[]>(42);
         int x = 50, y = 25;
@@ -188,7 +186,7 @@ public class GamePanel extends JPanel implements ActionListener
     }
 
 
-    public void loadBackgrounds()
+    public void loadBackgroundsImages()
     {
         backgroundS = new Image[NUMBER_OF_BACKGROUNDS];
         System.out.println(getClass().getResource("../textures/BG"+ (5-1) +".png"));
@@ -199,7 +197,7 @@ public class GamePanel extends JPanel implements ActionListener
                 backgroundS[i] = new ImageIcon(getClass().getResource("../textures/BG"+ i +".png")).getImage();
             }
         }
-        catch (EnumConstantNotPresentException E)
+        catch (Exception E)
         {
             statusMessage = "Error loading background!";
         }

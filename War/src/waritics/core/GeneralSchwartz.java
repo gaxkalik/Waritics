@@ -12,4 +12,9 @@ public class GeneralSchwartz extends Character
 
         good=false;
     }
+
+    public void addAttackButon(GamePanel panel)
+    {
+
+    }
 }

@@ -12,4 +12,9 @@ public class ColonelAckermann extends Character
 
         good=false;
     }
+
+    public void addAttackButon(GamePanel panel)
+    {
+
+    }
 }

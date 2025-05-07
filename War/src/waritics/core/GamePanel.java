@@ -18,9 +18,9 @@ public class GamePanel extends JPanel implements ActionListener
     /**The timer that triggers game updates and repaints at a fixed interval.*/
     private final Timer timer;
     /**A list to store all {@code Character} entities that are currently displayed on the screen.*/
-    private ArrayList<Character> entities;
+    ArrayList<Character> entities;
     /**The main boss character in the current game level.*/
-    private Character boss;
+    Character boss;
     /**A message to display game status or information to the player.*/
     private String statusMessage = "";
     /**The current level of the game.*/
@@ -28,11 +28,11 @@ public class GamePanel extends JPanel implements ActionListener
     /**The background image for the current game level or screen.*/
     private Image background;
     /**A list to store the player-controlled {@code Character} entities.*/
-    private ArrayList<Character> players;
+    ArrayList<Character> players;
     /** An instance of the {@code Config} class to handle game configuration loading and saving.*/
     private Config config;
     /**A map to store the grid coordinates for the attack buttons. The key is an index, and the value is an array containing the x and y coordinates.*/
-    private HashMap<Integer, Integer[]> attackButtonGrid;
+    HashMap<Integer, Integer[]> attackButtonGrid;
 
     /**
      * Constructs a new {@code GamePanel} for a specific game level.
@@ -94,6 +94,7 @@ public class GamePanel extends JPanel implements ActionListener
             background = new ImageIcon(getClass().getResource("../textures/BG1.png")).getImage();
             Character p1 = new Doc(100, 400);
 
+
             Character p2 = new Police(220, 400);
 
 
@@ -101,6 +102,9 @@ public class GamePanel extends JPanel implements ActionListener
             entities.add(boss);
             players.add(p1);
             entities.add(p1);
+
+            p1.addAttackButon(this);
+            p2.addAttackButon(this);
 
             players.add(p2);
             entities.add(p2);
@@ -189,7 +193,7 @@ public class GamePanel extends JPanel implements ActionListener
             }
         }
 
-        generateAttackButtons();
+        //generateAttackButtons();
         generateMainMenuButton();
 
     }

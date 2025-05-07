@@ -49,6 +49,8 @@ public abstract class Character
     /**An internal tracker used when the character has multiple targets to alternate between them.*/
     protected int track = 0;
 
+    protected int id;
+
     /**
      * Constructs a new {@code Character} with the specified attributes.
      *
@@ -97,6 +99,8 @@ public abstract class Character
             attack(targets.get(track));
         }
     }
+
+    public abstract void addAttackButon(GamePanel panel);
 
     /**
      * Attacks a specific target character, applying damage based on this character's attack power.

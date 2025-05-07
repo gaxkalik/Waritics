@@ -3,6 +3,8 @@ package waritics.core;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -234,4 +236,42 @@ public abstract class Character
         if (weapon == null) return attack;
         return attack * (100 + weapon.attackBoost) / 100;
     }
+
+    JButton generateAttackButton(int x, int y, int i, Character target)
+    {
+        JButton attackButton = new JButton("<html>Attack<br>" + name + "</html>");
+        attackButton.setFont(new Font("Arial", Font.PLAIN, 8));
+        attackButton.setFocusable(false);
+        attackButton.setBounds(70 * i, 550, 70, 50);
+
+
+        Timer attackTimer = new Timer(attackSpeed, new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                attackButton.setEnabled(true);
+                attackButton.setVisible(true);
+            }
+        });
+        attackTimer.setRepeats(false);
+
+        attackButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                attackButton.setEnabled(false);
+                attackButton.setVisible(false);
+                attackButton.setBounds(x, y, 75, 50);
+                attackTimer.start();
+
+                if (isAlive() && target.isAlive())
+                {
+                    attack(target);
+                }
+            }
+        });
+        return attackButton;
+    }
+
+//    abstract JButton generateSpecialAbilityButton(int x, int y, int i, Character target);
 }

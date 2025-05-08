@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements ActionListener
     /**A list to store the player-controlled {@code Character} entities.*/
     private ArrayList<Players> players;
     /** An instance of the {@code Config} class to handle game configuration loading and saving.*/
-    private Config config;
+    private final Config config;
     /**A map to store the grid coordinates for the attack buttons. The key is an index, and the value is an array containing the x and y coordinates.*/
     private HashMap<Integer, Integer[]> attackButtonGrid;
     private int damage = 0, defense = 0;
@@ -220,6 +220,7 @@ public class GamePanel extends JPanel implements ActionListener
         label.setBounds(270, 100, 400, 100);
 
         JButton startButton = new JButton("NEW GAME");
+        startButton.setBackground(Color.RED);
         startButton.setFocusable(false);
         startButton.setFont(new Font("Arial", Font.PLAIN, 19));
         startButton.setBounds(295, 250, 200, 75);
@@ -268,6 +269,7 @@ public class GamePanel extends JPanel implements ActionListener
             }
         });
 
+        
         add(loadButton);
         add(startButton);
         add(label);

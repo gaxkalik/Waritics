@@ -1,6 +1,7 @@
 package waritics.core;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Config
@@ -11,7 +12,6 @@ public class Config
     public Config(GamePanel gamePanel)
     {
         this.gamePanel = gamePanel;
-
     }
 
     void saveToDisc() throws Exception
@@ -39,4 +39,16 @@ public class Config
         reader.close();
     }
 
+    ArrayList<String> loadStatistics() throws Exception
+    {
+
+        ArrayList<String> result = new ArrayList<>();
+        File file = new File(getClass().getResource("../saves/save.txt").getFile());
+        Scanner reader = new Scanner(new FileInputStream(file));
+        while (reader.hasNextLine())
+        {
+            result.add(reader.nextLine());
+        }
+        return result;
+    }
 }

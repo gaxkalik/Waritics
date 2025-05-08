@@ -159,6 +159,10 @@ public class GamePanel extends JPanel implements ActionListener
         {
             loadEquipmentMenu();
         }
+        else if (level == -3)
+        {
+            loadStatMenu();
+        }
         else            //more levels to come
         {
             currentBG=4;
@@ -237,7 +241,7 @@ public class GamePanel extends JPanel implements ActionListener
         JButton exitButton = new JButton("EXIT GAME");
         exitButton.setFocusable(false);
         exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
-        exitButton.setBounds(295, 400, 200, 75);
+        exitButton.setBounds(295, 475, 200, 75);
         exitButton.addActionListener(new ActionListener()
         {
             @Override
@@ -270,11 +274,65 @@ public class GamePanel extends JPanel implements ActionListener
             }
         });
 
+        JButton statisticsButton = new JButton("STATISTICS");
+        statisticsButton.setFocusable(false);
+        statisticsButton.setFont(new Font("Arial", Font.PLAIN, 19));
+        statisticsButton.setBounds(295, 400, 200, 75);
+        statisticsButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                loadLevel(-3);
+            }
+        });
+
         
         add(loadButton);
         add(startButton);
         add(label);
         add(exitButton);
+        add(statisticsButton);
+
+    }
+
+    private void loadStatMenu()
+    {
+        ArrayList<String> stats = null;
+
+        statusMessage = "";
+        background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
+        JLabel label = new JLabel("STATISTICS");
+        label.setFont(new Font("Arial", Font.BOLD, 50));
+        label.setForeground(Color.LIGHT_GRAY);
+        label.setBounds(270, 100, 400, 100);
+
+        JTextArea textArea = new JTextArea();
+        //textArea.setLayout(new ScrollPaneLayout());
+        textArea.setEditable(false);
+        textArea.setFont(new Font("Arial", Font.PLAIN, 15));
+        textArea.setForeground(Color.BLACK);
+        textArea.setBounds(200, 200, 400, 300);
+
+
+        try
+        {
+            stats = config.loadStatistics();
+            for (int i = 0; i< stats.size(); i++)
+            {
+                textArea.append(stats.get(i)+"\n");
+            }
+        }
+        catch (Exception e)
+        {
+            statusMessage = "Error loading statistics!";
+            System.out.println("Error loading statistics!");
+        }
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setBounds(200, 200, 400, 300);
+
+        add(label);
+        add(scrollPane);
 
     }
 
@@ -325,7 +383,7 @@ public class GamePanel extends JPanel implements ActionListener
      */
     private void generateMainMenuButton()
     {
-        if(level >= 2)
+        if(level >= 2 || level == -3)
         {
             JButton mainMenuButton = new JButton("MAIN MENU");
             mainMenuButton.setFocusable(false);

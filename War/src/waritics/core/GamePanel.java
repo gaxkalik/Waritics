@@ -70,8 +70,6 @@ public class GamePanel extends JPanel implements ActionListener
 
         timer = new Timer(50, this);            //generates an event for game loop
         timer.start();
-
-
     }
 
     /**

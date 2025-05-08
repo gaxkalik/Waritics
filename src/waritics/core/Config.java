@@ -11,14 +11,18 @@ public class Config
     public Config(GamePanel gamePanel)
     {
         this.gamePanel = gamePanel;
+
     }
 
     void saveToDisc() throws Exception
     {
         this.level = gamePanel.getLevel();
-        PrintWriter writer = null;
-        File file = new File(getClass().getResource("../saves/save.txt").getFile());
-        writer = new PrintWriter(new FileOutputStream(file));
+
+        File file = new File("src/waritics/saves/save.txt");
+        file.createNewFile();
+
+        PrintWriter writer = new PrintWriter(new FileOutputStream(file, true));
+        writer.print(gamePanel.getPlayerName() + "\t");
         writer.println(level);
         writer.close();
     }
@@ -28,49 +32,11 @@ public class Config
         Scanner reader = null;
         File file = new File(getClass().getResource("../saves/save.txt").getFile());
         reader = new Scanner(new FileInputStream(file));
+        System.out.println("hehehee");
+        reader.next();
         level = reader.nextInt();
+        System.out.println("noex");
         reader.close();
     }
-
-    //in game panel it was:
-        /*
-    private void saveToDisc()
-    {
-        PrintWriter writer = null;
-        try
-        {
-            File file = new File(getClass().getResource("../saves/save.txt").getFile());
-            writer = new PrintWriter(new FileOutputStream(file));
-            writer.println(level);
-            writer.close();
-        }
-        catch (FileNotFoundException e)
-        {
-            loadLevel(0);
-            statusMessage = "Error saving game!";
-            System.out.println("sdfg");
-        }
-    }
-
-    private void loadFromDisc()
-    {
-        Scanner reader = null;
-        try
-        {
-            File file = new File(getClass().getResource("../saves/save.txt").getFile());
-            reader = new Scanner(new FileInputStream(file));
-            level = reader.nextInt();
-            loadLevel(level);
-            reader.close();
-        }
-        catch (Exception e)
-        {
-            loadLevel(0);
-            statusMessage = "Error loading game!";
-            System.out.println("ertyjyktyrt");
-        }
-    }
-
-     */
 
 }

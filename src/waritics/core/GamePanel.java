@@ -14,6 +14,9 @@ import java.util.HashMap;
 public class GamePanel extends JPanel implements ActionListener
 {
     public static final int NUMBER_OF_BACKGROUNDS = 5;
+
+    private String playerName;
+
     private int currentBG;
     /**The timer that triggers game updates and repaints at a fixed interval.*/
     private final Timer timer;
@@ -316,70 +319,6 @@ public class GamePanel extends JPanel implements ActionListener
         add(exitButton);
     }
 
-/*
-    /**
-     * Generates attack buttons for each player in the game.
-     * Each button is associated with a specific player and triggers their attack action on the boss.
-     * The buttons are initially placed at the bottom of the screen and then move to random grid locations when being clicked,
-     * becoming available again after a cooldown based on the player's attack speed.
-     *
-    private void generateAttackButtons()
-    {
-        for (int i = 0; i < players.size(); i++)
-        {
-
-            String name = players.get(i).name;
-            JButton attackButton = new JButton("<html>Attack<br>" + name + "</html>");
-
-            attackButton.setFont(new Font("Arial", Font.PLAIN, 8));
-            attackButton.setFocusable(false);
-            attackButton.setBounds(70 * i, 550, 70, 50);
-
-
-            Timer attackTimer = new Timer(players.get(i).attackSpeed, new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    attackButton.setEnabled(true);
-                    attackButton.setVisible(true);
-                }
-            });
-            attackTimer.setRepeats(false);
-
-            attackButton.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    attackButton.setEnabled(false);
-                    attackButton.setVisible(false);
-                    int gridIndex = (int) (Math.random() * 40);
-                    attackButton.setBounds(attackButtonGrid.get(gridIndex)[0], attackButtonGrid.get(gridIndex)[1], 75, 50);
-                    attackTimer.start();
-
-                    if (entities != null && players != null)
-                    {
-                        for (int i = 0; i < players.size(); i++)
-                        {
-                            if (players.get(i).isAlive() && boss.isAlive())
-                            {
-                                if (players.get(i).name.equals(name))
-                                {
-                                    players.get(i).attack(boss);
-                                    statusMessage = players.get(i).name + " attacked " + boss.name + "!";
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            add(attackButton);
-
-
-        }
-    }
-
-*/
     /**
      * Generates a button that allows the player to return to the main menu from gameplay levels (level >= 2).
      * This button is positioned at the top-left corner of the screen.
@@ -412,10 +351,49 @@ public class GamePanel extends JPanel implements ActionListener
      */
     private void loadMainStory()
     {
+        JTextField nameInput = new JTextField("Enter your name here");
+        nameInput.setFont(new Font("Arial", Font.PLAIN, 15));
+        nameInput.setForeground(Color.GRAY);
+        nameInput.setBackground(Color.LIGHT_GRAY.brighter());
+        nameInput.setToolTipText("Enter your name here");
+        nameInput.setBounds(270, 350, 250, 40);
+        nameInput.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                playerName = nameInput.getText();
+                System.out.println(playerName);
+                loadLevel(2);
+            }
+        });
+        nameInput.addFocusListener(new FocusListener()
+        {
+            @Override
+            public void focusGained(FocusEvent e)
+            {
+                nameInput.setForeground(Color.BLACK);
+                nameInput.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e)
+            {
+                if (nameInput.getText().equals(""))
+                {
+                    nameInput.setForeground(Color.GRAY);
+                    nameInput.setText("Enter your name here");
+                }
+            }
+        });
+
+
+
+
         JLabel label = new JLabel("<html>On one sunny day, from nowhere cataclysm occurred and portals were opened all over the world. From portals evil conquerors throughout the history were summoned. They conquered the world and injected the fear into all of the people who were still alive. Only a few of them, ordinary people like doctors & policemen were willing to fight. They should defeat all of the evil leaders to return the world to its peaceful times once again!!</html>");
         label.setFont(new Font("Arial", Font.BOLD, 15));
         label.setForeground(Color.WHITE);
-        label.setBounds(200, 100, 400, 400);
+        label.setBounds(200, 50, 400, 400);
 
         JButton button = new JButton("Continue");
         button.setFocusable(false);
@@ -426,9 +404,13 @@ public class GamePanel extends JPanel implements ActionListener
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                playerName = nameInput.getText();
+                System.out.println(playerName);
                 loadLevel(2);
             }
         });
+
+        add(nameInput);
 
         add(button);
         add(label);
@@ -442,6 +424,11 @@ public class GamePanel extends JPanel implements ActionListener
     public int getLevel()
     {
         return level;
+    }
+
+    public String getPlayerName()
+    {
+        return playerName;
     }
 
     private void loadEquipmentMenu()

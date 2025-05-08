@@ -95,11 +95,13 @@ public class GamePanel extends JPanel implements ActionListener
         removeAll();
         entities.clear();
         players.clear();
+        boss = null;
         statusMessage = "";
 
         if (level == 2)         //loads first level
         {
-            background = backgroundS[currentBG++];
+            currentBG=0;
+            background = backgroundS[currentBG];
             boss = new ColonelAckermann(550, 350, players);
 
             Players p1 = new Doc(50, 350, defense, damage);
@@ -116,7 +118,7 @@ public class GamePanel extends JPanel implements ActionListener
         else if (level == 3)       //loads second level
         {
             currentBG=1;
-            background = backgroundS[currentBG++];
+            background = backgroundS[currentBG];
             boss = new GeneralSchwartz(550, 350, players);
             Players p1 = new Police(70, 390, defense, damage, boss);
 
@@ -127,7 +129,7 @@ public class GamePanel extends JPanel implements ActionListener
         else if (level == 4)
         {
             currentBG=2;
-            background = backgroundS[currentBG++];
+            background = backgroundS[currentBG];
             boss = new GeneralSchwartz(450, 370, players);
             Players p1 = new Police(130, 400, defense, damage, boss);
             p1.setId(0);
@@ -217,9 +219,6 @@ public class GamePanel extends JPanel implements ActionListener
         label.setForeground(Color.LIGHT_GRAY);
         label.setBounds(270, 100, 400, 100);
 
-        boss = new Placeholder();
-        entities.add(boss);
-
         JButton startButton = new JButton("NEW GAME");
         startButton.setFocusable(false);
         startButton.setFont(new Font("Arial", Font.PLAIN, 19));
@@ -278,9 +277,6 @@ public class GamePanel extends JPanel implements ActionListener
 
     private void loadGameOverScreen()
     {
-        boss = new Placeholder();
-        entities.add(boss);
-
         background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
 
         JLabel label = new JLabel("GAME OVER");
@@ -416,9 +412,6 @@ public class GamePanel extends JPanel implements ActionListener
      */
     private void loadMainStory()
     {
-        boss = new Placeholder();
-        entities.add(boss);
-
         JLabel label = new JLabel("<html>On one sunny day, from nowhere cataclysm occurred and portals were opened all over the world. From portals evil conquerors throughout the history were summoned. They conquered the world and injected the fear into all of the people who were still alive. Only a few of them, ordinary people like doctors & policemen were willing to fight. They should defeat all of the evil leaders to return the world to its peaceful times once again!!</html>");
         label.setFont(new Font("Arial", Font.BOLD, 15));
         label.setForeground(Color.WHITE);
@@ -453,9 +446,6 @@ public class GamePanel extends JPanel implements ActionListener
 
     private void loadEquipmentMenu()
     {
-        boss = new Placeholder();
-        entities.add(boss);
-
         JButton armorButton = new JButton("Armor: +3");
         armorButton.setFocusable(false);
         armorButton.setFont(new Font("Arial", Font.PLAIN, 8));
@@ -520,7 +510,7 @@ public class GamePanel extends JPanel implements ActionListener
      * @param g The {@code Graphics} object used for drawing.
      */
     @Override
-    protected void paintComponent(Graphics g)
+    public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, 800, 600, null);
@@ -557,6 +547,11 @@ public class GamePanel extends JPanel implements ActionListener
         if(!alivePlayers())
         {
             loadLevel(-1);
+        }
+        else if (boss == null)
+        {
+           repaint();
+           return;
         }
         else if (boss.isAlive())
         {

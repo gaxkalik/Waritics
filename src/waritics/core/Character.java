@@ -150,6 +150,7 @@ public abstract class Character
         g.fillRect(x, y - 20, (int)attackBarWidth, 5);
 
         g.setColor(Color.WHITE);
+        g.setFont(PixelFont.pixelFont15);
         g.drawString(name, x, y - 25);
     }
 

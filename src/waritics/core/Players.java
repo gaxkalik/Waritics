@@ -32,7 +32,7 @@ public abstract class Players extends Character
 
         JButton attackButton = new JButton("<html>Attack<br>" + name + "</html>");
 
-        attackButton.setFont(new Font("Arial", Font.PLAIN, 8));
+        attackButton.setFont(PixelFont.pixelFont10);//new Font("Arial", Font.PLAIN, 8));
         attackButton.setFocusable(false);
         attackButton.setBounds(70 * id, 550, 70, 50);
 
@@ -75,7 +75,7 @@ public abstract class Players extends Character
     {
         JButton superAttackButton = new JButton("<html>SUPER<br>" + name + "</html>");
 
-        superAttackButton.setFont(new Font("Arial", Font.PLAIN, 8));
+        superAttackButton.setFont(PixelFont.pixelFont10);//new Font("Arial", Font.PLAIN, 8));
         superAttackButton.setFocusable(false);
         superAttackButton.setForeground(Color.RED);
         superAttackButton.setBounds(70 * id, 550, 70, 50);

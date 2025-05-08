@@ -1,22 +1,39 @@
-armen   2
-sdfg    6
-asdf    345
-sdfd    2
-armen   2
-sdfg    6
-asdf    345
-sdfd    2
-armen   2
-sdfg    6
-asdf    345
-sdfd    2
-men   2
-sdfg    6
-asdf    345
-sdfd    2
-armen   2
-sdfg    6
-asdf    345
-sdfd    2
-
-
+dfhjn: 2
+fghj: 4
+rtery: 6
+armenfghjkljhg: 6
+null: 2
+null: 2
+neg: 56
+Enter your name here: 2
+: 2
+nig: 67
+dfhjn: 2
+fghj: 4
+rtery: 6
+dfhjn: 2
+fghj: 4
+rtery: 6
+armenfghjkljhg: 6
+null: 2
+null: 2
+neg: 56
+Enter your name here: 2
+: 2
+nig: 67
+dfhjn: 2
+fghj: 4
+rtery: 6
+dfhjn: 2
+fghj: 4
+rtery: 6
+armenfghjkljhg: 6
+null: 2
+null: 2
+neg: 56
+Enter your name here: 2
+: 2
+nig: 67
+dfhjn: 2
+fghj: 4
+rtery: 6

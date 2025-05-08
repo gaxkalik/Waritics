@@ -15,7 +15,6 @@ class Game
         frame.setResizable(false);
         //frame.add(new ImageIcon("test.jpg"));
 
-
         int level = 0;
 
         frame.add(new GamePanel(level));

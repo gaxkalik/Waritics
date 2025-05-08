@@ -22,7 +22,7 @@ public class Config
         file.createNewFile();
 
         PrintWriter writer = new PrintWriter(new FileOutputStream(file, true));
-        writer.print(gamePanel.getPlayerName() + "\t");
+        writer.print(gamePanel.getPlayerName() + ": ");
         writer.println(level);
         writer.close();
     }
@@ -41,13 +41,25 @@ public class Config
 
     ArrayList<String> loadStatistics() throws Exception
     {
-
         ArrayList<String> result = new ArrayList<>();
+        result.add("Name \t\t\t Score\n");
         File file = new File(getClass().getResource("../saves/save.txt").getFile());
         Scanner reader = new Scanner(new FileInputStream(file));
         while (reader.hasNextLine())
         {
-            result.add(reader.nextLine());
+            String[] line = reader.nextLine().split(":");
+
+            if (line.length != 2)
+                break;
+            else
+            {
+                String currentName = line[0];
+
+                if (!currentName.equals("") && !currentName.equals("null") && !currentName.equals("Enter your name here"))
+                {
+                    result.add(currentName + "\t \t" + line[1]);
+                }
+            }
         }
         return result;
     }

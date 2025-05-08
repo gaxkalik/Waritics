@@ -14,6 +14,8 @@ import java.util.HashMap;
 public class GamePanel extends JPanel implements ActionListener
 {
     public static final int NUMBER_OF_BACKGROUNDS = 5;
+    public static final int WIDTH_OF_WINDOW = 800;
+    public static final int HEIGHT_OF_WINDOW = 600;
 
     private String playerName;
 
@@ -47,7 +49,7 @@ public class GamePanel extends JPanel implements ActionListener
      */
     public GamePanel(int level)
     {
-        setPreferredSize(new Dimension(800, 600));
+        setPreferredSize(new Dimension(WIDTH_OF_WINDOW, HEIGHT_OF_WINDOW));
         setBackground(Color.BLACK);
         setLayout(null);
 
@@ -220,14 +222,14 @@ public class GamePanel extends JPanel implements ActionListener
         background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
 
         JLabel label = new JLabel("WARITICS");
-        label.setFont(new Font("Arial", Font.BOLD, 50));
+        label.setFont(PixelFont.pixelFont50);//new Font("Arial", Font.BOLD, 50));
         label.setForeground(Color.LIGHT_GRAY);
-        label.setBounds(270, 100, 400, 100);
+        label.setBounds((WIDTH_OF_WINDOW-200)/2, 100, 400, 100);
 
         JButton startButton = new JButton("NEW GAME");
         startButton.setBackground(Color.RED);
         startButton.setFocusable(false);
-        startButton.setFont(new Font("Arial", Font.PLAIN, 19));
+        startButton.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         startButton.setBounds(295, 250, 200, 75);
         startButton.addActionListener(new ActionListener()
         {
@@ -240,7 +242,7 @@ public class GamePanel extends JPanel implements ActionListener
 
         JButton exitButton = new JButton("EXIT GAME");
         exitButton.setFocusable(false);
-        exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
+        exitButton.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         exitButton.setBounds(295, 475, 200, 75);
         exitButton.addActionListener(new ActionListener()
         {
@@ -253,7 +255,7 @@ public class GamePanel extends JPanel implements ActionListener
 
         JButton loadButton = new JButton("CONTINUE");
         loadButton.setFocusable(false);
-        loadButton.setFont(new Font("Arial", Font.PLAIN, 19));
+        loadButton.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         loadButton.setBounds(295, 325, 200, 75);
         loadButton.addActionListener(new ActionListener()
         {
@@ -276,7 +278,7 @@ public class GamePanel extends JPanel implements ActionListener
 
         JButton statisticsButton = new JButton("STATISTICS");
         statisticsButton.setFocusable(false);
-        statisticsButton.setFont(new Font("Arial", Font.PLAIN, 19));
+        statisticsButton.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         statisticsButton.setBounds(295, 400, 200, 75);
         statisticsButton.addActionListener(new ActionListener()
         {
@@ -303,14 +305,14 @@ public class GamePanel extends JPanel implements ActionListener
         statusMessage = "";
         background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
         JLabel label = new JLabel("STATISTICS");
-        label.setFont(new Font("Arial", Font.BOLD, 50));
+        label.setFont(PixelFont.pixelFont50);//new Font("Arial", Font.BOLD, 50));
         label.setForeground(Color.LIGHT_GRAY);
-        label.setBounds(270, 100, 400, 100);
+        label.setBounds((WIDTH_OF_WINDOW-200)/2, 100, 400, 100);
 
         JTextArea textArea = new JTextArea();
         //textArea.setLayout(new ScrollPaneLayout());
         textArea.setEditable(false);
-        textArea.setFont(new Font("Arial", Font.PLAIN, 15));
+        textArea.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 15));
         textArea.setForeground(Color.BLACK);
         textArea.setBounds(200, 200, 400, 300);
 
@@ -341,14 +343,14 @@ public class GamePanel extends JPanel implements ActionListener
         background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
 
         JLabel label = new JLabel("GAME OVER");
-        label.setFont(new Font("Arial", Font.PLAIN, 50));
+        label.setFont(PixelFont.pixelFont50);//new Font("Arial", Font.PLAIN, 50));
         label.setForeground(new Color(247, 68, 2));
 
         label.setBounds(270, 100, 400, 100);
 
         JButton startButton = new JButton("MAIN MENU");
         startButton.setFocusable(false);
-        startButton.setFont(new Font("Arial", Font.PLAIN, 19));
+        startButton.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         startButton.setBounds(295, 250, 200, 75);
         startButton.addActionListener(new ActionListener()
         {
@@ -361,7 +363,7 @@ public class GamePanel extends JPanel implements ActionListener
 
         JButton exitButton = new JButton("EXIT GAME");
         exitButton.setFocusable(false);
-        exitButton.setFont(new Font("Arial", Font.PLAIN, 19));
+        exitButton.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         exitButton.setBounds(295, 325, 200, 75);
         exitButton.addActionListener(new ActionListener()
         {
@@ -387,7 +389,7 @@ public class GamePanel extends JPanel implements ActionListener
         {
             JButton mainMenuButton = new JButton("MAIN MENU");
             mainMenuButton.setFocusable(false);
-            mainMenuButton.setFont(new Font("Arial", Font.PLAIN, 8));
+            mainMenuButton.setFont(PixelFont.pixelFont10);//new Font("Arial", Font.PLAIN, 8));
             mainMenuButton.setBounds(0, 0, 75, 40);
             mainMenuButton.addActionListener(new ActionListener()
             {
@@ -410,7 +412,7 @@ public class GamePanel extends JPanel implements ActionListener
     private void loadMainStory()
     {
         JTextField nameInput = new JTextField("Enter your name here");
-        nameInput.setFont(new Font("Arial", Font.PLAIN, 15));
+        nameInput.setFont(PixelFont.pixelFont15);//new Font("Arial", Font.PLAIN, 15));
         nameInput.setForeground(Color.GRAY);
         nameInput.setBackground(Color.LIGHT_GRAY.brighter());
         nameInput.setToolTipText("Enter your name here");
@@ -449,13 +451,13 @@ public class GamePanel extends JPanel implements ActionListener
 
 
         JLabel label = new JLabel("<html>On one sunny day, from nowhere cataclysm occurred and portals were opened all over the world. From portals evil conquerors throughout the history were summoned. They conquered the world and injected the fear into all of the people who were still alive. Only a few of them, ordinary people like doctors & policemen were willing to fight. They should defeat all of the evil leaders to return the world to its peaceful times once again!!</html>");
-        label.setFont(new Font("Arial", Font.BOLD, 15));
-        label.setForeground(Color.WHITE);
+        label.setFont(PixelFont.pixelFont15);//new Font("Arial", Font.BOLD, 15));
+        label.setForeground(Color.YELLOW.brighter().brighter());
         label.setBounds(200, 50, 400, 400);
 
         JButton button = new JButton("Continue");
         button.setFocusable(false);
-        button.setFont(new Font("Arial", Font.PLAIN, 19));
+        button.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         button.setBounds(295, 400, 200, 75);
         button.addActionListener(new ActionListener()
         {
@@ -493,7 +495,7 @@ public class GamePanel extends JPanel implements ActionListener
     {
         JButton armorButton = new JButton("Armor: +3");
         armorButton.setFocusable(false);
-        armorButton.setFont(new Font("Arial", Font.PLAIN, 8));
+        armorButton.setFont(PixelFont.pixelFont10);//new Font("Arial", Font.PLAIN, 8));
         armorButton.setBounds(200, 250, 100, 50);
         armorButton.addActionListener(new ActionListener() {
             @Override
@@ -505,7 +507,7 @@ public class GamePanel extends JPanel implements ActionListener
         });
         JButton weaponButton = new JButton("Damage: +3");
         weaponButton.setFocusable(false);
-        weaponButton.setFont(new Font("Arial", Font.PLAIN, 8));
+        weaponButton.setFont(PixelFont.pixelFont10);//new Font("Arial", Font.PLAIN, 8));
         weaponButton.setBounds(400, 250, 100, 50);
         weaponButton.addActionListener(new ActionListener() {
             @Override
@@ -567,10 +569,11 @@ public class GamePanel extends JPanel implements ActionListener
         if (level >= 2)
         {
             g.setColor(Color.WHITE);
+            g.setFont(PixelFont.pixelFont15);
             g.drawString("Level: " + (level - 1), 700, 20);
 
             g.setColor(Color.RED);
-            g.setFont(new Font("Arial", Font.BOLD, 18));
+            g.setFont(PixelFont.pixelFont15);//new Font("Arial", Font.BOLD, 18));
             g.drawString(statusMessage, 150, 25);
         }
     }

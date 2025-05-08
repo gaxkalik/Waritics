@@ -36,4 +36,10 @@ Enter your name here: 2
 nig: 67
 dfhjn: 2
 fghj: 4
-rtery: 6
+34567: 5
+: 4
+
+null: 4
+null: 4
+null: 4
+null: 4

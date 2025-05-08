@@ -22,8 +22,8 @@ public class Config
         file.createNewFile();
 
         PrintWriter writer = new PrintWriter(new FileOutputStream(file, true));
-        writer.print(gamePanel.getPlayerName() + ": ");
-        writer.println(level);
+        writer.print("\n" + gamePanel.getPlayerName() + ": ");
+        writer.print(level);
         writer.close();
     }
 
@@ -32,10 +32,21 @@ public class Config
         Scanner reader = null;
         File file = new File(getClass().getResource("../saves/save.txt").getFile());
         reader = new Scanner(new FileInputStream(file));
-        System.out.println("hehehee");
-        reader.next();
-        level = reader.nextInt();
-        System.out.println("noex");
+        while (reader.hasNextLine())
+        {
+            reader.nextLine();
+            try
+            {
+                reader.next();
+                level = reader.nextInt();
+            }
+            catch (Exception e)
+            {
+                continue;
+            }
+
+        }
+
         reader.close();
     }
 

@@ -267,9 +267,11 @@ public class GamePanel extends JPanel implements ActionListener
                 {
                     config.loadFromDisc();
                     loadLevel(config.level);
-                } catch (Exception E)
+                    statusMessage = "Successfully loaded last game";
+                }
+                catch (Exception E)
                 {
-                    loadLevel(0);
+                    loadLevel(2);
                     statusMessage = "Error loading game!";
                 }
 

@@ -17,9 +17,17 @@ public class Config
     void saveToDisc() throws Exception
     {
         this.level = gamePanel.getLevel();
+        File file;
 
-        File file = new File("src/waritics/saves/save.txt");
-        file.createNewFile();
+        try
+        {
+            file = new File("src/waritics/saves/save.txt");
+            file.createNewFile();
+        }
+        catch (IOException e)
+        {
+            file = new File(getClass().getResource("../saves/save.txt").getFile());
+        }
 
         if(!(gamePanel.getPlayerName().equals("Enter your name here")) && !(gamePanel.getPlayerName().equals("")) && !(gamePanel.getPlayerName() == null))
         {

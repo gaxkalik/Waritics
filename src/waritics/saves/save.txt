@@ -2,53 +2,9 @@ dfhjn: 2
 fghj: 4
 rtery: 6
 armenfghjkljhg: 6
-null: 2
-null: 2
-neg: 56
-Enter your name here: 2
-: 2
-nig: 67
-dfhjn: 2
-fghj: 4
-rtery: 6
-dfhjn: 2
-fghj: 4
-rtery: 6
-armenfghjkljhg: 6
-null: 2
-null: 2
-neg: 56
-Enter your name here: 2
-: 2
-nig: 67
-dfhjn: 2
-fghj: 4
-rtery: 6
-dfhjn: 2
-fghj: 4
-rtery: 6
-armenfghjkljhg: 6
-null: 2
-null: 2
-neg: 56
-Enter your name here: 2
-: 2
-nig: 67
-dfhjn: 2
-fghj: 4
-34567: 5
-: 4
-
-null: 4
-null: 4
-null: 4
-null: 4
-ghjk: 2
-null: 2
-sdm: 2
-sdfg: 2
-Enter your name here: 2
-sdf: 2
-sdf: 3
-sdf: 4
+sdcf: 2
+sdfwe: 3
+qwwesdf: 4
 sdf: 5
+sd: 2
+qpqpq: 2

@@ -12,7 +12,9 @@
 
 **Installation:** 
 
-To install and set up the project clone the repository: `git clone https://github.com/ArmenB2003/Waritics.git` then go to  game directory: `cd Waritics`
+To install and set up the project clone the repository: `git clone https://github.com/ArmenB2003/Waritics.git` 
+
+Then go to game directory by: `cd Waritics`
 
 To run the program: 
 

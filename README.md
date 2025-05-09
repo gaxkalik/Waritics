@@ -13,13 +13,14 @@ To install and set up the project, follow these steps:
 	git clone https://github.com/ArmenB2003/Waritics.git
 	cd Waritics
 
-To eun the program: 
-	**1.compile:**  `javac waritics/Game.java`
+To run the program: 
+**1.compile:**  `javac waritics/Game.java`
  
-	**2.run:** `java waritics/Game`
+**2.run:** `java waritics/Game`
  
 Or
-	**run:** `java waritics/Game.java`
+**Run by:** `java waritics/Game.java`
+
 ``` bash
 Project Structure:
 	Waritics/

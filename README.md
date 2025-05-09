@@ -16,7 +16,7 @@ To install and set up the project clone the repository: `git clone https://githu
 
 Then go to game directory by: `cd Waritics`
 
-__ To run the program: __
+_ To run the program: _
 
 **1. Compile:**  `javac waritics/Game.java`
  

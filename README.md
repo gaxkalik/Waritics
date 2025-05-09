@@ -15,7 +15,7 @@ To install and set up the project, follow these steps:
 
 Run the program: 
 	**compile:**  `javac waritics/Game.java`
-	**run:** `java waritics/Game`
+	then **run:** `java waritics/Game`
 Or
 	**run:** `java waritics/Game.java`
 ``` bash

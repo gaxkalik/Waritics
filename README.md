@@ -14,6 +14,7 @@ To install and set up the project, follow these steps:
 	cd Waritics
 
 To run the program: 
+
 **1.compile:**  `javac waritics/Game.java`
  
 **2.run:** `java waritics/Game`

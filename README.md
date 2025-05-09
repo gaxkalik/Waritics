@@ -18,7 +18,7 @@ Run the program:
 	**run:** `java waritics/Game`
 Or
 	**run:** `java waritics/Game.java`
-
+```
 Project Structure:
 	Waritics/
 	├── src/
@@ -28,5 +28,6 @@ Project Structure:
 	│   │   └── textures/      # Images of characters and logos in the game
 	│   │   └── Game           # Java file from where the program should be ran
 	└── └── README.md          # This file
+```
 	
 [Project Link](https://github.com/ArmenB2003/Waritics)

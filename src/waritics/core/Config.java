@@ -21,10 +21,13 @@ public class Config
         File file = new File("src/waritics/saves/save.txt");
         file.createNewFile();
 
-        PrintWriter writer = new PrintWriter(new FileOutputStream(file, true));
-        writer.print("\n" + gamePanel.getPlayerName() + ": ");
-        writer.print(level);
-        writer.close();
+        if(!(gamePanel.getPlayerName().equals("Enter your name here")) && !(gamePanel.getPlayerName().equals("")) && !(gamePanel.getPlayerName() == null))
+        {
+            PrintWriter writer = new PrintWriter(new FileOutputStream(file, true));
+            writer.print("\n" + gamePanel.getPlayerName() + ": ");
+            writer.print(level);
+            writer.close();
+        }
     }
 
     void loadFromDisc() throws Exception
@@ -46,7 +49,6 @@ public class Config
             }
 
         }
-
         reader.close();
     }
 

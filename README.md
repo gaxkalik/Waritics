@@ -18,7 +18,7 @@ Run the program:
 	**run:** `java waritics/Game`
 Or
 	**run:** `java waritics/Game.java`
-```
+``` bash
 Project Structure:
 	Waritics/
 	├── src/

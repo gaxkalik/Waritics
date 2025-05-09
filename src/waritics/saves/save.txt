@@ -1,10 +1,17 @@
-dfhjn: 2
-fghj: 4
-rtery: 6
-armenfghjkljhg: 6
-sdcf: 2
-sdfwe: 3
-qwwesdf: 4
-sdf: 5
-sd: 2
-qpqpq: 2
+sdfwe:3
+sdcf:2
+uhihihiuhiuh:2
+jjj:3
+fghj:4
+qwwesdf:4
+kjkjnkjn:3
+sd:2
+sdf:5
+lknlknl:2
+rtery:6
+yyyy:3
+armenfghj:6
+dfhjn:2
+ABCDTEST12:4
+qpqpq:2
+qreerqewrqr:2

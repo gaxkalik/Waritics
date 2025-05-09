@@ -3,6 +3,7 @@ package waritics.core;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.HashMap;
 
 public class Config
 {
@@ -16,26 +17,43 @@ public class Config
 
     void saveToDisc() throws Exception
     {
-        this.level = gamePanel.getLevel();
+        this.level = gamePanel.getLevel() - 1;
         File file;
 
         try                             //works on unix
         {
             file = new File("src/waritics/saves/save.txt");
             file.createNewFile();
+
         }
         catch (IOException e)           //works on windows
         {
             file = new File(getClass().getResource("../saves/save.txt").getFile());
         }
 
-        if(!(gamePanel.getPlayerName().equals("Enter your name here")) && !(gamePanel.getPlayerName().equals("")) && !(gamePanel.getPlayerName() == null))
-        {
-            PrintWriter writer = new PrintWriter(new FileOutputStream(file, true));
-            writer.print("\n" + gamePanel.getPlayerName() + ": ");
-            writer.print(level);
-            writer.close();
+        String playerName = gamePanel.getPlayerName();
+        if (playerName == null || playerName.isBlank() || playerName.equals("Enter your name here")) return;
+
+        HashMap<String, Integer> scores = new HashMap<>();
+        Scanner reader = new Scanner(new FileInputStream(file));
+        while (reader.hasNextLine()) {
+            String[] line = reader.nextLine().split(":");
+            if(line.length == 2) {
+                int lvl = Integer.parseInt(line[1]);
+                if (!scores.containsKey(line[0]) || scores.get(line[0]) < lvl)
+                    scores.put(line[0], lvl);
+            }
         }
+
+        PrintWriter writer = new PrintWriter(new FileOutputStream(file, false));
+
+        if (!scores.containsKey(playerName) || scores.get(playerName) <= level)
+            scores.put(gamePanel.getPlayerName(), level);
+
+        for (String key : scores.keySet()) {
+            writer.println(key + ":" + scores.get(key));
+        }
+        writer.close();
     }
 
     void loadFromDisc() throws Exception

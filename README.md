@@ -1,16 +1,16 @@
-Game name: Waritics
+**Game name:** Waritics
 
-Type: RPG, clicker
+**Type:** RPG, clicker
 
-Authors: Sergey Nersesyan, Mher Mkrtchyan, Armen Balagyozyan
+**Authors:** Sergey Nersesyan, Mher Mkrtchyan, Armen Balagyozyan
 
-Email: armen_balagyozyan@edu.aua.am
+**Email:** armen_balagyozyan@edu.aua.am
 
-Description: This an RPG clicker where players should click on the attack button which appears in random places in order to defeat the enemy.
+**Description:** This an RPG clicker where players should click on the attack button which appears in random places in order to defeat the enemy.
 
-Prerequisites: `JDK 23` or higher
+**Prerequisites:** `JDK 23` or higher
 
-Installation:
+**Installation:** 
 
 To install and set up the project, follow these steps:
 

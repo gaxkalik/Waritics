@@ -169,10 +169,11 @@ public class GamePanel extends JPanel implements ActionListener
         {
             currentBG=4;
             background = backgroundS[currentBG++];
-            //player = new Police(100, 100);
-            boss = new ColonelAckermann(400, 400, players);
-            entities.add(boss);
-            //entities.add(player);
+            JLabel label = new JLabel("<html>You have completed all levels! <br> * YOU CAN BUY MORE:) *</html>");
+            label.setFont(PixelFont.pixelFont50);
+            label.setForeground(Color.YELLOW.brighter().brighter());
+            label.setBounds((WIDTH_OF_WINDOW-700), 200, 600, 200);
+            add(label);
         }
 
         if (level >= 2)
@@ -228,7 +229,7 @@ public class GamePanel extends JPanel implements ActionListener
         label.setBounds((WIDTH_OF_WINDOW-200)/2, 100, 400, 100);
 
         JButton startButton = new JButton("NEW GAME");
-        startButton.setBackground(Color.RED);
+        startButton.setBackground(Color.WHITE);
         startButton.setFocusable(false);
         startButton.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         startButton.setBounds(295, 250, 200, 75);
@@ -242,6 +243,7 @@ public class GamePanel extends JPanel implements ActionListener
         });
 
         JButton exitButton = new JButton("EXIT GAME");
+        exitButton.setBackground(Color.WHITE);
         exitButton.setFocusable(false);
         exitButton.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         exitButton.setBounds(295, 475, 200, 75);
@@ -255,6 +257,7 @@ public class GamePanel extends JPanel implements ActionListener
         });
 
         JButton loadButton = new JButton("CONTINUE");
+        loadButton.setBackground(Color.WHITE);
         loadButton.setFocusable(false);
         loadButton.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         loadButton.setBounds(295, 325, 200, 75);
@@ -280,6 +283,7 @@ public class GamePanel extends JPanel implements ActionListener
         });
 
         JButton statisticsButton = new JButton("STATISTICS");
+        statisticsButton.setBackground(Color.WHITE);
         statisticsButton.setFocusable(false);
         statisticsButton.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         statisticsButton.setBounds(295, 400, 200, 75);
@@ -352,6 +356,7 @@ public class GamePanel extends JPanel implements ActionListener
         label.setBounds(270, 100, 400, 100);
 
         JButton startButton = new JButton("MAIN MENU");
+        startButton.setBackground(Color.WHITE);
         startButton.setFocusable(false);
         startButton.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         startButton.setBounds(295, 250, 200, 75);
@@ -365,6 +370,7 @@ public class GamePanel extends JPanel implements ActionListener
         });
 
         JButton exitButton = new JButton("EXIT GAME");
+        exitButton.setBackground(Color.WHITE);
         exitButton.setFocusable(false);
         exitButton.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         exitButton.setBounds(295, 325, 200, 75);
@@ -391,6 +397,7 @@ public class GamePanel extends JPanel implements ActionListener
         if(level >= 2 || level == -3)
         {
             JButton mainMenuButton = new JButton("MAIN MENU");
+            mainMenuButton.setBackground(Color.WHITE);
             mainMenuButton.setFocusable(false);
             mainMenuButton.setFont(PixelFont.pixelFont10);//new Font("Arial", Font.PLAIN, 8));
             mainMenuButton.setBounds(0, 0, 75, 40);
@@ -459,6 +466,7 @@ public class GamePanel extends JPanel implements ActionListener
         label.setBounds(200, 50, 400, 400);
 
         JButton button = new JButton("Continue");
+        button.setBackground(Color.WHITE);
         button.setFocusable(false);
         button.setFont(PixelFont.pixelFont20);//new Font("Arial", Font.PLAIN, 19));
         button.setBounds(295, 400, 200, 75);
@@ -496,10 +504,17 @@ public class GamePanel extends JPanel implements ActionListener
 
     private void loadEquipmentMenu()
     {
+        JLabel label = new JLabel("UPGRADE YOUR EQUIPMENT");
+        label.setFont(PixelFont.pixelFont50);
+        label.setForeground(Color.YELLOW.brighter().brighter());
+        label.setBounds((WIDTH_OF_WINDOW-670), 100, 600, 100);
+
+
         JButton armorButton = new JButton("Armor: +3");
+        armorButton.setBackground(Color.WHITE);
         armorButton.setFocusable(false);
         armorButton.setFont(PixelFont.pixelFont10);//new Font("Arial", Font.PLAIN, 8));
-        armorButton.setBounds(200, 250, 100, 50);
+        armorButton.setBounds(245, 250, 100, 50);
         armorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -509,9 +524,10 @@ public class GamePanel extends JPanel implements ActionListener
             }
         });
         JButton weaponButton = new JButton("Damage: +3");
+        weaponButton.setBackground(Color.WHITE);
         weaponButton.setFocusable(false);
         weaponButton.setFont(PixelFont.pixelFont10);//new Font("Arial", Font.PLAIN, 8));
-        weaponButton.setBounds(400, 250, 100, 50);
+        weaponButton.setBounds(450, 250, 100, 50);
         weaponButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -519,6 +535,8 @@ public class GamePanel extends JPanel implements ActionListener
                 loadLevel(++level);
             }
         });
+
+        add(label);
         add(armorButton);
         add(weaponButton);
     }

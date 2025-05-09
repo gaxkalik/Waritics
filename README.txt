@@ -5,7 +5,7 @@ Email: armen_balagyozyan@edu.aua.am
 
 Description: This an RPG clicker where players should click on the attack button which appears in random places in order to defeat the enemy.
 
-Prerequisites: JDK 23 or higher
+Prerequisites: `JDK 23` or higher
 
 Installation:
 To install and set up the project, follow these steps:
@@ -14,8 +14,10 @@ To install and set up the project, follow these steps:
 	cd Waritics
 
 Run the program: 
-	compile - javac src/waritics/core/*.java src/waritics/Game.java
-	run - java src.waritics.Game
+	**compile:**  `javac waritics/Game.java`
+	**run:** `java waritics/Game`
+Or
+	**run:** `java waritics/Game.java`
 
 Project Structure:
 	Waritics/
@@ -27,4 +29,4 @@ Project Structure:
 	│   │   └── Game           # Java file from where the program should be ran
 	└── └── README.md          # This file
 	
-Project Link: https://github.com/ArmenB2003/Waritics
+[Project Link](https://github.com/ArmenB2003/Waritics)

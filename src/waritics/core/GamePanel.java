@@ -262,7 +262,7 @@ public class GamePanel extends JPanel implements ActionListener
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //System.out.println("sdfghj");
+                //System.out.println("hehehehehe");
                 try
                 {
                     config.loadFromDisc();

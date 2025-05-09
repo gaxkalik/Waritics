@@ -4,7 +4,7 @@ import waritics.core.*;
 import javax.swing.*;
 import java.io.*;
 
-class Game
+public class Game
 {
     public static void main(String[] args)
     {

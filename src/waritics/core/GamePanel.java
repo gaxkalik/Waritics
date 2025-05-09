@@ -221,6 +221,7 @@ public class GamePanel extends JPanel implements ActionListener
         statusMessage = "";
         background = new ImageIcon(getClass().getResource("../textures/BG_MAIN.jpeg")).getImage();
 
+
         JLabel label = new JLabel("WARITICS");
         label.setFont(PixelFont.pixelFont50);//new Font("Arial", Font.BOLD, 50));
         label.setForeground(Color.LIGHT_GRAY);

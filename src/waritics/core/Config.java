@@ -19,12 +19,12 @@ public class Config
         this.level = gamePanel.getLevel();
         File file;
 
-        try
+        try                             //works on unix
         {
             file = new File("src/waritics/saves/save.txt");
             file.createNewFile();
         }
-        catch (IOException e)
+        catch (IOException e)           //works on windows
         {
             file = new File(getClass().getResource("../saves/save.txt").getFile());
         }

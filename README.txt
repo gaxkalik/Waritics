@@ -1,39 +1,30 @@
 Game name: Waritics
-Type: RPG
+Type: RPG, clicker
 Authors: Sergey Nersesyan, Mher Mkrtchyan, Armen Balagyozyan
 Email: armen_balagyozyan@edu.aua.am
 
-Class Characters -> some characters will be inharited from this class 
-	int health
-	double damage
-	double attackSpeed
-	class(enum profession(doctor, lawyer, policeman, villain))
-	void? special ability()
-	enum level(common, rare, epic)
-	Arraylist equipment
+Description: This an RPG clicker where players should click on the attack button which appears in random places in order to defeat the enemy.
 
+Prerequisites: JDK 23 or higher
 
+Installation:
+To install and set up the project, follow these steps:
+1. Clone the repository:
+	git clone https://github.com/ArmenB2003/Waritics.git
+	cd Waritics
 
-Class Equipment -> Class weapon 
-			double damage
-			enum rarity
-			enum type
-			
-		-> Class armor
-			int armorPoints
-			enum rarity
+Run the program: 
+	compile - javac src/waritics/core/*.java src/waritics/Game.java
+	run - java src.waritics.Game
 
-		-> Class special abilities
-			void ability()
-			enum type
-
-ClassPlayer -> Class Inventory
-	Map equipment
-	Arraylist boosters
-	int money
-
-Class GameProcess
-	void gameState()
-	void playerState()
+Project Structure:
+	Waritics/
+	├── src/
+	│   ├── waritics/
+	│   │   ├── core/          # Java source files (Characters, Equipment, Panel)
+	│   │   └── saves/         # Saved information of Players and scores
+	│   │   └── textures/      # Images of characters and logos in the game
+	│   │   └── Game           # Java file from where the program should be ran
+	└── └── README.md          # This file
 	
-
+Project Link: https://github.com/ArmenB2003/Waritics

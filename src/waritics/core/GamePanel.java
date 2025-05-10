@@ -176,16 +176,6 @@ public class GamePanel extends JPanel implements ActionListener
             add(label);
         }
 
-        if (level >= 2)
-        {
-            try
-            {
-                config.saveToDisc();
-            } catch (Exception E)
-            {
-                statusMessage = "Error saving game!";
-            }
-        }
 
         for (Players p : players)
             p.addAttackButon(this);
@@ -394,7 +384,7 @@ public class GamePanel extends JPanel implements ActionListener
      */
     private void generateMainMenuButton()
     {
-        if(level >= 2 || level == -3)
+        if(level >= 1 || level == -3)
         {
             JButton mainMenuButton = new JButton("MAIN MENU");
             mainMenuButton.setBackground(Color.WHITE);
@@ -406,6 +396,13 @@ public class GamePanel extends JPanel implements ActionListener
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
+                    try
+                    {
+                        config.saveToDisc();
+                    } catch (Exception E)
+                    {
+                        statusMessage = "Error saving game!";
+                    }
                     loadLevel(0);
                 }
             }
@@ -615,6 +612,13 @@ public class GamePanel extends JPanel implements ActionListener
 
         if(!alivePlayers())
         {
+            try
+            {
+                config.saveToDisc();
+            } catch (Exception E)
+            {
+                statusMessage = "Error saving game!";
+            }
             loadLevel(-1);
         }
         else if (boss == null)

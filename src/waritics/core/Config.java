@@ -8,6 +8,7 @@ public class Config
 {
     int level;
     GamePanel gamePanel;
+    String playerName;
 
     public Config(GamePanel gamePanel)
     {
@@ -16,7 +17,8 @@ public class Config
 
     void saveToDisc() throws Exception
     {
-        this.level = gamePanel.getLevel();
+        playerName = gamePanel.getPlayerName();
+        this.level = gamePanel.getLevel() - 1;
         File file;
 
         try                             //works on unix
@@ -29,7 +31,7 @@ public class Config
             file = new File(getClass().getResource("../saves/save.txt").getFile());
         }
 
-        if(!(gamePanel.getPlayerName().equals("Enter your name here")) && !(gamePanel.getPlayerName().equals("")) && !(gamePanel.getPlayerName() == null))
+        if(!(playerName.equals("Enter your name here")) && !(playerName.equals("")) && !(playerName == null))
         {
             PrintWriter writer = new PrintWriter(new FileOutputStream(file, true));
             writer.print("\n" + gamePanel.getPlayerName() + ": ");
@@ -49,7 +51,7 @@ public class Config
             try
             {
                 reader.next();
-                level = reader.nextInt();
+                level = reader.nextInt() + 1;
             }
             catch (Exception e)
             {

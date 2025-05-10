@@ -173,7 +173,14 @@ public class GamePanel extends JPanel implements ActionListener
             label.setFont(PixelFont.pixelFont50);
             label.setForeground(Color.YELLOW.brighter().brighter());
             label.setBounds((WIDTH_OF_WINDOW-700), 200, 600, 200);
+
+            JLabel label2 = new JLabel("Ameria Bank: 4083060040003333");
+            label2.setFont(PixelFont.pixelFont8);
+            label2.setForeground(Color.YELLOW.brighter().brighter());
+            label2.setBounds((WIDTH_OF_WINDOW-700), 300, 600, 200);
+
             add(label);
+            add(label2);
         }
 
 

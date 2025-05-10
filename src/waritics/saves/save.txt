@@ -6,4 +6,4 @@ Serg: 4
 Gres: 4
 aaa: 2
 mmm: 4
-zxzx: 1
+zxzx: 3

@@ -2,15 +2,15 @@
 
 **Type:** RPG, clicker
 
-**Authors:** Sergey Nersesyan, Mher Mkrtchyan, Armen Balagyozyan
+**Authors:**Armen Balagyozyan, Sergey Nersesyan, Mher Mkrtchyan 
 
-**Email:** armen_balagyozyan@edu.aua.am
+**Email:** armen_balagyozyan@edu.aua.am or gaxkalik@gmail.com
 
 **Description:** This an RPG clicker where players should click on the attack button which appears in random places in order to defeat the enemy.
 
 **Prerequisites:** `JDK 23` or higher
 
-**Installation:** 
+# Installation
 
 To install and set up the project clone the repository: `git clone https://github.com/ArmenB2003/Waritics.git` 
 

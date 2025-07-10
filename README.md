@@ -1,8 +1,8 @@
 **Game name:** Waritics
 
 **Type:** RPG, clicker
-
-**Authors:** Sergey Nersesyan, Mher Mkrtchyan, Armen Balagyozyan
+ 
+**Authors:** Armen Balagyozyan, Sergey Nersesyan, Mher Mkrtchyan
 
 **Email:** armen_balagyozyan@edu.aua.am
 
@@ -10,7 +10,7 @@
 
 **Prerequisites:** `JDK 23` or higher
 
-**Installation:** 
+# Installation
 
 To install and set up the project clone the repository: `git clone https://github.com/ArmenB2003/Waritics.git` 
 

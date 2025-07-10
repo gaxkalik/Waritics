@@ -1,4 +1,4 @@
-**Game name:** Waritics
+# Waritics
 
 **Type:** RPG, clicker
  
